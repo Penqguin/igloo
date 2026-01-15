@@ -1,0 +1,21 @@
+---
+import { headerData } from '../../navigation';
+import "../../styles/global.css";
+
+const { links } = headerData;
+---
+
+<header class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <div class="flex gap-8">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+        >
+          {link.text}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>

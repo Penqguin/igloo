@@ -1,0 +1,32 @@
+site:
+  name: 'Michael Maddison'
+  site: 'https://example.com'
+  base: '/'
+  trailingSlash: false
+
+metadata:
+  title:
+    default: 'Michael Maddison'
+    template: '%s — Portfolio'
+  description: 'Full-stack developer building beautiful and functional web experiences'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: 'Michael Maddison'
+    images:
+      - url: '~/assets/images/og-image.png'
+        width: 1200
+        height: 628
+    type: website
+  twitter:
+    handle: '@yourhandle'
+    site: '@yourhandle'
+    cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+ui:
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

@@ -1,0 +1,31 @@
+---
+import Favicons from '../components/Favicons.astro';
+import Header from '../components/widgets/Header.astro';
+import Footer from '../components/widgets/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const title = 'Michael Maddison';
+const description = 'My portfolio website';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Favicons />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body class="bg-white dark:bg-slate-900 text-gray-900 dark:text-white">
+    <Header />
+    <main class="min-h-screen">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

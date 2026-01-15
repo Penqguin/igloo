@@ -1,0 +1,24 @@
+{
+  "name": "igloo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.24.0",
+  "dependencies": {
+    "astro": "^5.16.4",
+    "astro-icon": "^1.1.5"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/vite": "^4.1.17",
+    "tailwindcss": "^4.1.17"
+  }
+}
