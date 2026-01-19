@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/portfolio/ProjectCard.astro';
----<Layout title="Projects" description="View my portfolio projects">
+---
+<Layout title="Projects" description="View my portfolio projects">
 	<main class="bg-[#2E3440] min-h-screen py-16">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			{/* Header */}
@@ -12,27 +13,32 @@ import ProjectCard from '../components/portfolio/ProjectCard.astro';
 				</p>
 			</div>
 
-			{/* Projects Grid */}
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{/* Empty state - ready for data injection via props or API calls */}
-				{/* Map projects here when data is available */}
-				{/* Example structure: 
-					{projects.map((project) => (
-						<ProjectCard
-							title={project.title}
-							description={project.description}
-							image={project.image}
-							tags={project.tags}
-							link={project.link}
-						/>
+			{/* Projects Grid - Empty State with Background Layout Preview */}
+			<div class="relative min-h-96 flex items-center justify-center overflow-hidden">
+				{/* Background faded circles showing grid layout */}
+				<div class="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 sm:p-6 lg:p-8 pointer-events-none">
+					{[...Array(6)].map((_, i) => (
+						<div
+							data-index={i}
+							class="aspect-square bg-[#3B4252] rounded-lg opacity-10 blur-sm"
+						></div>
 					))}
-				*/}
-				
-				{/* Placeholder showing grid structure */}
-				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8 text-center">
-					<p class="text-[#D8DEE9] text-sm opacity-75">
-						Projects loading... Awaiting data injection
+				</div>
+
+				{/* Center message */}
+				<div class="relative z-10 text-center px-4">
+					<h2 class="text-3xl md:text-4xl font-bold text-[#E5E9F0] mb-4">
+						Projects Coming Soon
+					</h2>
+					<p class="text-lg text-[#D8DEE9] mb-8 max-w-md mx-auto">
+						I'm currently building my portfolio projects. Check back soon to see what I've been working on!
 					</p>
+					<a
+						href="/"
+						class="inline-block px-6 py-3 bg-[#88C0D0] text-[#2E3440] rounded-lg font-medium hover:bg-[#81A1C1] transition-colors duration-200"
+					>
+						Back to Home
+					</a>
 				</div>
 			</div>
 		</div>
