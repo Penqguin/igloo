@@ -24,7 +24,7 @@ export interface FooterData {
 
 export const headerData: HeaderData = {
   links: [
-    { text: 'Home', href: '/' },
+    { logo: 'mdi:home', text: 'Home', href: '/' },
     { text: 'About', href: '/about' },
     { text: 'Projects', href: '/projects' },
     { text: 'Snowboarding', href: '/snowboarding' },

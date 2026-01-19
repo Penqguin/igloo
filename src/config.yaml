@@ -8,21 +8,17 @@ metadata:
   title:
     default: 'Michael Maddison'
     template: '%s — Portfolio'
-  description: 'Full-stack developer building beautiful and functional web experiences'
+  description: 'My Dev Portfolio'
   robots:
     index: true
     follow: true
   openGraph:
     site_name: 'Michael Maddison'
     images:
-      - url: '~/assets/images/og-image.png'
+      - url: '~/assets/images/igloo-logo.svg'
         width: 1200
         height: 628
     type: website
-  twitter:
-    handle: '@yourhandle'
-    site: '@yourhandle'
-    cardType: summary_large_image
 
 i18n:
   language: en
