@@ -1,6 +1,6 @@
 # My Portfolio Website
 
-A modern, responsive portfolio website built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
+Built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
 
 ## 📁 Project Structure
 
@@ -21,7 +21,6 @@ A modern, responsive portfolio website built with [Astro](https://astro.build) a
 │   │   ├── widgets/            # Page sections (Header, Footer, Hero)
 │   │   ├── portfolio/          # Portfolio-specific components
 │   │   ├── Favicons.astro      # Favicon meta tags
-│   │   └── Logo.astro          # Logo component
 │   ├── content/
 │   │   └── portfolio/          # Portfolio item markdown files
 │   ├── layouts/

@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Snowboarding" description="Snowboarding photos and videos">
+	<main class="bg-[#2E3440] min-h-screen py-16">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			{/* Header */}
+			<div class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Snowboarding</h1>
+				<p class="text-lg text-[#D8DEE9] max-w-2xl">
+					A collection of snowboarding moments, mountains, and adventures.
+				</p>
+			</div>
+
+			{/* Masonry Gallery Grid */}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
+				{/* Empty state - ready for image/video data injection */}
+				{/* This gallery supports both images and videos via data props */}
+				{/* Expected data structure:
+					{items.map((item) => (
+						<figure class="bg-[#3B4252] rounded-lg overflow-hidden border border-[#434C5E]">
+							{item.type === 'image' ? (
+								<img src={item.url} alt={item.caption} class="w-full h-auto" />
+							) : (
+								<video src={item.url} class="w-full h-auto" />
+							)}
+							{item.caption && (
+								<figcaption class="p-4 text-[#D8DEE9] text-sm">
+									{item.caption}
+								</figcaption>
+							)}
+						</figure>
+					))}
+				*/}
+
+				{/* Placeholder showing gallery structure */}
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-square flex items-center justify-center">
+					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
+						Gallery loading... Awaiting image/video data
+					</p>
+				</div>
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-video flex items-center justify-center">
+					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
+						More content coming soon
+					</p>
+				</div>
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-square flex items-center justify-center">
+					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
+						Ready for data injection
+					</p>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>

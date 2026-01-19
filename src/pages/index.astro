@@ -1,9 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/widgets/Hero.astro';
-import ProjectCard from '../components/portfolio/ProjectCard.astro';
+import Hero from '../components/Hero.astro';
+import BentoGrid from '../components/BentoGrid.astro';
 ---
+
 <Layout title="Home" description="Welcome to my portfolio website">
-	<Hero title="Michael Maddison" subtitle="I build things." ctaText="Get in touch" ctaHref="/contact" />
+	<Hero
+		headline="Hello, I'm Michael"
+		subheadline="Full Stack Developer & Creative Technologist"
+		bio="I build beautiful, functional digital experiences. Passionate about clean code, responsive design, and the intersection of art and technology."
+		profileImage="/assets/profile-placeholder.jpg"
+		socialLinks={[
+			{ label: 'GitHub', url: 'https://github.com/penqguin' },
+			{ label: 'LinkedIn', url: 'https://linkedin.com/in/michaelpanmaddison' },
+		]}
+	/>
+	
+	<BentoGrid />
 </Layout>
 

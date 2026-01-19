@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact" description="Get in touch with me">
+	<main class="bg-[#2E3440] min-h-screen py-16">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			{/* Header */}
+			<div class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Get In Touch</h1>
+				<p class="text-lg text-[#D8DEE9]">
+					Have a question or proposal? I'd love to hear from you.
+				</p>
+			</div>
+
+			{/* Contact Methods */}
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+				{/* Email Card */}
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8 hover:border-[#88C0D0] transition-colors duration-200">
+					<h3 class="text-lg font-semibold text-[#E5E9F0] mb-2">Email</h3>
+					<a
+						href="mailto:hello@example.com"
+						class="text-[#88C0D0] hover:text-[#81A1C1] transition-colors duration-200 break-all"
+					>
+						hello@example.com
+					</a>
+				</div>
+
+				{/* Social Links Card */}
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8 hover:border-[#88C0D0] transition-colors duration-200">
+					<h3 class="text-lg font-semibold text-[#E5E9F0] mb-4">Connect</h3>
+					<div class="flex gap-6">
+						<a
+							href="https://github.com/penqguin"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
+							aria-label="GitHub"
+						>
+							GitHub
+						</a>
+						<a
+							href="https://linkedin.com/in/michaelpanmaddison"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
+							aria-label="LinkedIn"
+						>
+							LinkedIn
+						</a>
+					</div>
+				</div>
+			</div>
+
+			{/* Contact Form Section */}
+			<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+				<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Send a Message</h2>
+				
+				{/* Form placeholder - ready for form submission implementation */}
+				<form class="space-y-6">
+					{/* Name Field */}
+					<div>
+						<label for="name" class="block text-[#E5E9F0] font-medium mb-2">
+							Your Name
+						</label>
+						<input
+							type="text"
+							id="name"
+							name="name"
+							required
+							class="w-full px-4 py-2 bg-[#2E3440] border border-[#434C5E] rounded-lg text-[#D8DEE9] placeholder-[#D8DEE9] placeholder-opacity-50 focus:border-[#88C0D0] focus:outline-none transition-colors duration-200"
+							placeholder="John Doe"
+						/>
+					</div>
+
+					{/* Email Field */}
+					<div>
+						<label for="email" class="block text-[#E5E9F0] font-medium mb-2">
+							Your Email
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							required
+							class="w-full px-4 py-2 bg-[#2E3440] border border-[#434C5E] rounded-lg text-[#D8DEE9] placeholder-[#D8DEE9] placeholder-opacity-50 focus:border-[#88C0D0] focus:outline-none transition-colors duration-200"
+							placeholder="john@example.com"
+						/>
+					</div>
+
+					{/* Subject Field */}
+					<div>
+						<label for="subject" class="block text-[#E5E9F0] font-medium mb-2">
+							Subject
+						</label>
+						<input
+							type="text"
+							id="subject"
+							name="subject"
+							required
+							class="w-full px-4 py-2 bg-[#2E3440] border border-[#434C5E] rounded-lg text-[#D8DEE9] placeholder-[#D8DEE9] placeholder-opacity-50 focus:border-[#88C0D0] focus:outline-none transition-colors duration-200"
+							placeholder="How can I help?"
+						/>
+					</div>
+
+					{/* Message Field */}
+					<div>
+						<label for="message" class="block text-[#E5E9F0] font-medium mb-2">
+							Message
+						</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							required
+							class="w-full px-4 py-2 bg-[#2E3440] border border-[#434C5E] rounded-lg text-[#D8DEE9] placeholder-[#D8DEE9] placeholder-opacity-50 focus:border-[#88C0D0] focus:outline-none transition-colors duration-200 resize-none"
+							placeholder="Your message here..."
+						></textarea>
+					</div>
+
+					{/* Submit Button */}
+					<button
+						type="submit"
+						class="w-full px-6 py-3 bg-[#88C0D0] text-[#2E3440] rounded-lg font-medium hover:bg-[#81A1C1] transition-colors duration-200"
+					>
+						Send Message
+					</button>
+				</form>
+			</div>
+		</div>
+	</main>
+</Layout>

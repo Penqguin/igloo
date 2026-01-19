@@ -1,4 +1,73 @@
 ---
-
-
+import Layout from '../layouts/Layout.astro';
 ---
+
+<Layout title="About" description="Learn more about me">
+	<main class="bg-[#2E3440] min-h-screen py-16">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			{/* Header */}
+			<div class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">About Me</h1>
+			</div>
+
+			{/* Content Sections - Ready for data injection */}
+			<div class="space-y-8">
+				{/* Bio Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-4">Background</h2>
+					<p class="text-[#D8DEE9] leading-relaxed mb-4">
+						[Biography content placeholder - ready for data injection]
+					</p>
+					<p class="text-[#D8DEE9] leading-relaxed">
+						[Additional background information can be added here]
+					</p>
+				</section>
+
+				{/* Skills Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Skills & Technologies</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						{/* Skills would map here from data */}
+						{/* Example:
+							{skillCategories.map((category) => (
+								<div>
+									<h3 class="text-[#88C0D0] font-semibold mb-2">{category.name}</h3>
+									<div class="flex flex-wrap gap-2">
+										{category.skills.map((skill) => (
+											<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm">
+												{skill}
+											</span>
+										))}
+									</div>
+								</div>
+							))}
+						*/}
+						<div class="p-4 bg-[#434C5E] rounded-lg text-center">
+							<p class="text-[#D8DEE9] text-sm opacity-75">Skills data loading...</p>
+						</div>
+					</div>
+				</section>
+
+				{/* Experience Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Experience</h2>
+					<div class="space-y-6">
+						{/* Experience timeline would map here from data */}
+						{/* Example:
+							{experiences.map((exp) => (
+								<div class="border-l-2 border-[#88C0D0] pl-6">
+									<h3 class="text-[#E5E9F0] font-semibold">{exp.title}</h3>
+									<p class="text-[#88C0D0] text-sm">{exp.company} • {exp.period}</p>
+									<p class="text-[#D8DEE9] mt-2">{exp.description}</p>
+								</div>
+							))}
+						*/}
+						<div class="p-4 bg-[#434C5E] rounded-lg text-center">
+							<p class="text-[#D8DEE9] text-sm opacity-75">Experience data loading...</p>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</main>
+</Layout>

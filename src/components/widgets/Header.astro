@@ -3,19 +3,111 @@ import { headerData } from '../../navigation';
 import "../../styles/global.css";
 
 const { links } = headerData;
+const navLinks = links.filter(link => link.text !== 'Home');
 ---
 
-<header class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-    <div class="flex gap-8">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-        >
-          {link.text}
-        </a>
-      ))}
+<header class="sticky top-0 z-50 bg-[#2E3440] border-b border-[#3B4252] backdrop-blur-sm bg-opacity-95">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex justify-between items-center">
+      {/* Logo/Home - Left */}
+      <a 
+        href="/" 
+        class="flex items-center gap-2 text-[#88C0D0] hover:text-[#81A1C1] transition-colors duration-200"
+        aria-label="Home"
+      >
+        <img src="/assets/favicons/igloo-logo.svg" alt="Home" class="w-10 h-8" />
+      </a>
+
+      {/* Main Navigation Links - Right (Desktop) */}
+      <div class="hidden md:flex gap-8 items-center">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200 text-m font-medium"
+          >
+            {link.text}
+          </a>
+        ))}
+      </div>
+
+      {/* Mobile Hamburger Menu */}
+      <button 
+        id="mobile-menu-btn"
+        class="md:hidden text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   </nav>
+
+  {/* Mobile Side Navigation */}
+  <div 
+    id="mobile-nav"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+  >
+    <nav class="absolute top-0 left-0 w-64 h-screen bg-[#3B4252] border-r border-[#434C5E] flex flex-col">
+      {/* Close Button */}
+      <button 
+        id="mobile-menu-close"
+        class="self-end p-4 text-[#D8DEE9] hover:text-[#88C0D0]"
+        aria-label="Close menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Navigation Links */}
+      <div class="flex-1 px-4 py-6 space-y-4">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200 font-medium py-2"
+          >
+            {link.text}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+    if (mobileMenuBtn && mobileNav && mobileMenuClose) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileNav.classList.remove('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      });
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileNav.classList.add('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      mobileNav.addEventListener('click', (e) => {
+        if (e.target === mobileNav) {
+          mobileNav.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close on navigation
+      const navLinks = mobileNav.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  });
+</script>

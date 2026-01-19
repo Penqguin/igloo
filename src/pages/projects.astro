@@ -1,4 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/portfolio/ProjectCard.astro';
----
+---<Layout title="Projects" description="View my portfolio projects">
+	<main class="bg-[#2E3440] min-h-screen py-16">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			{/* Header */}
+			<div class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Projects</h1>
+				<p class="text-lg text-[#D8DEE9] max-w-2xl">
+					A collection of projects and experiments I've worked on.
+				</p>
+			</div>
+
+			{/* Projects Grid */}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{/* Empty state - ready for data injection via props or API calls */}
+				{/* Map projects here when data is available */}
+				{/* Example structure: 
+					{projects.map((project) => (
+						<ProjectCard
+							title={project.title}
+							description={project.description}
+							image={project.image}
+							tags={project.tags}
+							link={project.link}
+						/>
+					))}
+				*/}
+				
+				{/* Placeholder showing grid structure */}
+				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8 text-center">
+					<p class="text-[#D8DEE9] text-sm opacity-75">
+						Projects loading... Awaiting data injection
+					</p>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>

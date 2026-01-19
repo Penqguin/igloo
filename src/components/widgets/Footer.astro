@@ -6,26 +6,34 @@ import { Icon } from 'astro-icon/components';
 const { contentLinks } = footerData;
 ---
 
-<footer class="bg-gray-50 dark:bg-slate-800 border-t border-gray-200 dark:border-gray-700 mt-12">
+<footer class="bg-[#3B4252] border-t border-[#434C5E] mt-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex justify-between">
-      <div>
-        <div class="flex gap-4">
-          {contentLinks.map((link) => (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              <Icon name={link.logo} class="w-6 h-6" />
-            </a>
-          ))}
-        </div>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+      <!-- Social Links -->
+      <div class="flex gap-6">
+        {contentLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
+            aria-label={link.text}
+          >
+            <Icon name={link.logo} class="w-5 h-5" />
+          </a>
+        ))}
+      </div>
+
+      <!-- Status Indicator -->
+      <div class="flex items-center gap-2 text-[#D8DEE9] text-sm">
+        <span class="w-2 h-2 rounded-full bg-[#A3BE8C]"></span>
+        <span>All Services Nominal</span>
       </div>
     </div>
-    <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-600 dark:text-gray-400 text-sm">
-      <p>&copy; 2025 Michael Maddison.</p>
+
+    <!-- Copyright -->
+    <div class="mt-8 pt-8 border-t border-[#434C5E] text-center text-[#D8DEE9] text-sm opacity-75">
+      <p>&copy; 2025 Michael Maddison. All rights reserved.</p>
     </div>
   </div>
 </footer>

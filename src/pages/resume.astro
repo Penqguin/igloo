@@ -1,43 +1,112 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-
 ---
 
-<Layout title="Services" description="Services I offer">
-  <section class="section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-4xl font-bold mb-12">Services</h1>
+<Layout title="Resume" description="My resume and professional background">
+	<main class="bg-[#2E3440] min-h-screen py-16">
+		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+			{/* Header */}
+			<div class="mb-12">
+				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Resume</h1>
+				<div class="flex gap-4 flex-wrap">
+					<a
+						href="/resume.pdf"
+						class="px-4 py-2 bg-[#88C0D0] text-[#2E3440] rounded-lg font-medium hover:bg-[#81A1C1] transition-colors duration-200"
+					>
+						Download PDF
+					</a>
+					<a
+						href="mailto:hello@example.com"
+						class="px-4 py-2 border border-[#88C0D0] text-[#88C0D0] rounded-lg font-medium hover:bg-[#88C0D0] hover:text-[#2E3440] transition-colors duration-200"
+					>
+						Contact Me
+					</a>
+				</div>
+			</div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md">
-        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2">Web Design</h3>
-        <p class="text-gray-600 dark:text-gray-400">Beautiful, responsive web designs that engage users</p>
-      </div>
+			{/* Resume Content - Ready for data injection */}
+			<div class="space-y-8">
+				{/* Summary Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-4">Professional Summary</h2>
+					<p class="text-[#D8DEE9] leading-relaxed">
+						[Professional summary placeholder - ready for data injection]
+					</p>
+				</section>
 
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md">
-        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2">Development</h3>
-        <p class="text-gray-600 dark:text-gray-400">Full-stack development with modern technologies</p>
-      </div>
+				{/* Experience Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Experience</h2>
+					<div class="space-y-6">
+						{/* Timeline entries would map here from data */}
+						{/* Example:
+							{experiences.map((exp) => (
+								<div class="border-l-4 border-[#88C0D0] pl-6 pb-6">
+									<h3 class="text-[#E5E9F0] font-semibold text-lg">{exp.title}</h3>
+									<p class="text-[#88C0D0]">{exp.company}</p>
+									<p class="text-[#D8DEE9] text-sm opacity-75 mb-2">{exp.period}</p>
+									<p class="text-[#D8DEE9]">{exp.description}</p>
+									{exp.achievements && (
+										<ul class="list-disc list-inside text-[#D8DEE9] mt-2 ml-2 space-y-1">
+											{exp.achievements.map((achievement) => (
+												<li class="text-sm">{achievement}</li>
+											))}
+										</ul>
+									)}
+								</div>
+							))}
+						*/}
+						<div class="p-4 bg-[#434C5E] rounded-lg text-center">
+							<p class="text-[#D8DEE9] text-sm opacity-75">Experience data loading...</p>
+						</div>
+					</div>
+				</section>
 
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md">
-        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-2">Optimization</h3>
-        <p class="text-gray-600 dark:text-gray-400">Performance and SEO optimization for your site</p>
-      </div>
-    </div>
-  </section>
+				{/* Skills Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Skills</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						{/* Skills would map here from data */}
+						{/* Example:
+							{skillCategories.map((category) => (
+								<div>
+									<h3 class="text-[#88C0D0] font-semibold mb-3">{category.name}</h3>
+									<div class="flex flex-wrap gap-2">
+										{category.skills.map((skill) => (
+											<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm border border-[#88C0D0] border-opacity-30">
+												{skill}
+											</span>
+										))}
+									</div>
+								</div>
+							))}
+						*/}
+						<div class="p-4 bg-[#434C5E] rounded-lg text-center">
+							<p class="text-[#D8DEE9] text-sm opacity-75">Skills data loading...</p>
+						</div>
+					</div>
+				</section>
+
+				{/* Education Section */}
+				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Education</h2>
+					<div class="space-y-6">
+						{/* Education entries would map here from data */}
+						{/* Example:
+							{education.map((edu) => (
+								<div class="border-l-4 border-[#A3BE8C] pl-6">
+									<h3 class="text-[#E5E9F0] font-semibold">{edu.degree}</h3>
+									<p class="text-[#88C0D0]">{edu.school}</p>
+									<p class="text-[#D8DEE9] text-sm opacity-75">{edu.year}</p>
+								</div>
+							))}
+						*/}
+						<div class="p-4 bg-[#434C5E] rounded-lg text-center">
+							<p class="text-[#D8DEE9] text-sm opacity-75">Education data loading...</p>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</main>
 </Layout>
