@@ -1,0 +1,62 @@
+---
+import { Icon } from 'astro-icon/components';
+import { projects } from '../../navigation';
+
+const featuredProjects = projects.filter((p) => p.featured);
+---
+
+<section class="bg-[#2E3440] py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Section Header */}
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-[#E5E9F0] mb-2">Featured Projects</h2>
+          <p class="text-[#D8DEE9] max-w-2xl">Highlighted projects I'm proud of</p>
+        </div>
+        <a
+          href="/projects"
+          class="text-[#88C0D0] hover:text-[#81A1C1] transition-colors duration-200 font-medium"
+        >
+          View all →
+        </a>
+      </div>
+    </div>
+
+    {/* Projects Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {featuredProjects.map((project) => (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-all duration-200 hover:shadow-lg hover:shadow-[#88C0D0]/20"
+        >
+          {/* Header with icon */}
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
+                {project.title}
+              </h3>
+            </div>
+            <Icon name="mdi:github" class="w-6 h-6 text-[#D8DEE9] shrink-0 ml-3" />
+          </div>
+
+          {/* Description */}
+          <p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 line-clamp-2">
+            {project.description}
+          </p>
+
+          {/* Tags */}
+          <div class="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="px-2 py-1 bg-[#434C5E] text-[#88C0D0] text-xs rounded font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,5 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ImageGallery from '../components/ImageGallery.astro';
+
+// Define the snowboarding images
+const images = [
+	{
+		url: '/snowboardTracking/Slopes 20260114 Mount St. Louis Moonstone Runs and Lifts.png',
+		caption: 'Mount St. Louis Moonstone - Jan 14, 2026',
+		date: 'Jan 14, 2026',
+	},
+];
 ---
 
 <Layout title="Snowboarding" description="Snowboarding photos and videos">
@@ -9,48 +19,12 @@ import Layout from '../layouts/Layout.astro';
 			<div class="mb-12">
 				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Snowboarding</h1>
 				<p class="text-lg text-[#D8DEE9] max-w-2xl">
-					A collection of snowboarding moments, mountains, and adventures.
+					My snowboarding tracking and photos.
 				</p>
 			</div>
 
-			{/* Masonry Gallery Grid */}
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
-				{/* Empty state - ready for image/video data injection */}
-				{/* This gallery supports both images and videos via data props */}
-				{/* Expected data structure:
-					{items.map((item) => (
-						<figure class="bg-[#3B4252] rounded-lg overflow-hidden border border-[#434C5E]">
-							{item.type === 'image' ? (
-								<img src={item.url} alt={item.caption} class="w-full h-auto" />
-							) : (
-								<video src={item.url} class="w-full h-auto" />
-							)}
-							{item.caption && (
-								<figcaption class="p-4 text-[#D8DEE9] text-sm">
-									{item.caption}
-								</figcaption>
-							)}
-						</figure>
-					))}
-				*/}
-
-				{/* Placeholder showing gallery structure */}
-				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-square flex items-center justify-center">
-					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
-						Gallery loading... Awaiting image/video data
-					</p>
-				</div>
-				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-video flex items-center justify-center">
-					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
-						More content coming soon
-					</p>
-				</div>
-				<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg aspect-square flex items-center justify-center">
-					<p class="text-[#D8DEE9] text-sm text-center px-4 opacity-75">
-						Ready for data injection
-					</p>
-				</div>
-			</div>
+			{/* Gallery */}
+			<ImageGallery images={images} />
 		</div>
 	</main>
 </Layout>

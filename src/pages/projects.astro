@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/portfolio/ProjectCard.astro';
+import { Icon } from 'astro-icon/components';
+import { projects } from '../navigation';
 ---
 <Layout title="Projects" description="View my portfolio projects">
 	<main class="bg-[#2E3440] min-h-screen py-16">
@@ -9,37 +10,53 @@ import ProjectCard from '../components/portfolio/ProjectCard.astro';
 			<div class="mb-12">
 				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">Projects</h1>
 				<p class="text-lg text-[#D8DEE9] max-w-2xl">
-					A collection of projects and experiments I've worked on.
+					A collection of projects I've worked on, showcasing my work in systems development, web technologies, and competitive programming.
 				</p>
 			</div>
 
-			{/* Projects Grid - Empty State with Background Layout Preview */}
-			<div class="relative min-h-96 flex items-center justify-center overflow-hidden">
-				{/* Background faded circles showing grid layout */}
-				<div class="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 sm:p-6 lg:p-8 pointer-events-none">
-					{[...Array(6)].map((_, i) => (
-						<div
-							data-index={i}
-							class="aspect-square bg-[#3B4252] rounded-lg opacity-10 blur-sm"
-						></div>
-					))}
-				</div>
-
-				{/* Center message */}
-				<div class="relative z-10 text-center px-4">
-					<h2 class="text-3xl md:text-4xl font-bold text-[#E5E9F0] mb-4">
-						Projects Coming Soon
-					</h2>
-					<p class="text-lg text-[#D8DEE9] mb-8 max-w-md mx-auto">
-						I'm currently building my portfolio projects. Check back soon to see what I've been working on!
-					</p>
+			{/* Projects Grid */}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{projects.map((project) => (
 					<a
-						href="/"
-						class="inline-block px-6 py-3 bg-[#88C0D0] text-[#2E3440] rounded-lg font-medium hover:bg-[#81A1C1] transition-colors duration-200"
+						href={project.github}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-all duration-200 hover:shadow-lg hover:shadow-[#88C0D0]/20 flex flex-col"
 					>
-						Back to Home
+						{/* Featured Badge */}
+						{project.featured && (
+							<div class="mb-3 inline-flex">
+								<span class="px-3 py-1 bg-[#88C0D0] text-[#2E3440] text-xs font-bold rounded-full">
+									Featured
+								</span>
+							</div>
+						)}
+
+						{/* Header with icon */}
+						<div class="flex items-start justify-between mb-4 flex-1">
+							<div class="flex-1">
+								<h3 class="text-xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
+									{project.title}
+								</h3>
+							</div>
+							<Icon name="mdi:github" class="w-6 h-6 text-[#D8DEE9] flex-shrink-0 ml-3" />
+						</div>
+
+						{/* Description */}
+						<p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 flex-1">
+							{project.description}
+						</p>
+
+						{/* Tags */}
+						<div class="flex flex-wrap gap-2">
+							{project.tags.map((tag) => (
+								<span class="px-2 py-1 bg-[#434C5E] text-[#88C0D0] text-xs rounded font-medium">
+									{tag}
+								</span>
+							))}
+						</div>
 					</a>
-				</div>
+				))}
 			</div>
 		</div>
 	</main>

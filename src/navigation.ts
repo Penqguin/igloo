@@ -46,3 +46,41 @@ export const footerData: FooterData = {
     },
   ],
 };
+
+export interface Project {
+  name: string;
+  title: string;
+  description: string;
+  featured: boolean;
+  github: string;
+  tags: string[];
+}
+
+export const projects: Project[] = [
+  {
+    name: 'igloo',
+    title: 'Igloo',
+    description:
+      'A modern Astro-based static site generator portfolio with TypeScript, Tailwind CSS, and responsive design.',
+    featured: true,
+    github: 'https://github.com/Penqguin/igloo',
+    tags: ['astro', 'typescript', 'tailwind', 'web'],
+  },
+  {
+    name: 'PengWM',
+    title: 'PengWM',
+    description: 'A lightweight window manager built with performance and simplicity in mind.',
+    featured: true,
+    github: 'https://github.com/Penqguin/PengWM',
+    tags: ['window-manager', 'systems', 'C'],
+  },
+  {
+    name: 'Computing-Competitions',
+    title: 'Computing Competitions',
+    description:
+      'Solutions and resources for competitive programming challenges and algorithmic problem-solving.',
+    featured: false,
+    github: 'https://github.com/Penqguin/Computing-Competitions',
+    tags: ['algorithms', 'competitive-programming', 'python', 'C++'],
+  },
+];

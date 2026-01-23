@@ -1,0 +1,32 @@
+---
+// Image gallery component
+interface Props {
+  images: Array<{
+    url: string;
+    caption?: string;
+    date?: string;
+  }>;
+}
+
+const { images } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
+  {images.map((item) => (
+    <figure class="bg-[#3B4252] rounded-lg overflow-hidden border border-[#434C5E] hover:border-[#88C0D0] transition-all duration-200 group">
+      <img
+        src={item.url}
+        alt={item.caption}
+        class="w-full h-auto"
+      />
+      {item.caption && (
+        <figcaption class="p-4 text-[#D8DEE9] text-sm border-t border-[#434C5E]">
+          <p class="font-medium">{item.caption}</p>
+          {item.date && (
+            <p class="text-[#88C0D0] text-xs mt-1">{item.date}</p>
+          )}
+        </figcaption>
+      )}
+    </figure>
+  ))}
+</div>
