@@ -1,0 +1,166 @@
+---
+---
+
+<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-4 hover:border-[#88C0D0] transition-colors duration-200 flex flex-col items-center justify-center">
+  <div class="mb-3 text-center">
+    <p class="text-sm font-semibold text-[#E5E9F0]">Tic Tac Toe</p>
+    <p class="text-2xl font-bold text-[#88C0D0]" id="winCount">0</p>
+    <p class="text-[#D8DEE9] text-xs">wins</p>
+  </div>
+
+  <!-- Compact Game Board -->
+  <div class="grid grid-cols-3 gap-1 bg-[#2E3440] p-1 rounded mb-3" id="gameBoard">
+    {[...Array(9)].map((_, i) => (
+      <button
+        class="w-10 h-10 bg-[#434C5E] border border-[#5E81AC] rounded text-sm font-bold text-[#E5E9F0] hover:bg-[#5E81AC] transition-colors duration-200"
+        data-index={i}
+      ></button>
+    ))}
+  </div>
+
+  <p class="text-[#88C0D0] text-xs text-center mb-3 h-4" id="gameStatus">Your turn</p>
+
+  <button
+    id="resetBtn"
+    class="px-3 py-1 bg-[#88C0D0] text-[#2E3440] rounded text-xs font-semibold hover:bg-[#81A1C1] transition-colors duration-200 w-full"
+  >
+    New Game
+  </button>
+</div>
+
+<script is:inline>
+  window.initTicTacToe = function initTicTacToe() {
+    const TicTacToe = {
+      board: ['', '', '', '', '', '', '', '', ''],
+      gameActive: true,
+      isPlayerTurn: true,
+      winConditions: [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]],
+
+      getWinCount() {
+        const wins = localStorage.getItem('tictactoe_wins');
+        return wins ? parseInt(wins) : 0;
+      },
+
+      setWinCount(count) {
+        localStorage.setItem('tictactoe_wins', count.toString());
+        document.getElementById('winCount').textContent = count;
+      },
+
+      checkWin(player) {
+        return this.winConditions.some(cond => cond.every(i => this.board[i] === player));
+      },
+
+      getAvailableMoves() {
+        return this.board
+          .map((cell, i) => (cell === '' ? i : null))
+          .filter(i => i !== null);
+      },
+
+      updateBoard() {
+        const gameBoard = document.getElementById('gameBoard');
+        const buttons = gameBoard.querySelectorAll('button');
+        buttons.forEach((btn, i) => {
+          btn.textContent = this.board[i];
+          btn.disabled = this.board[i] !== '';
+        });
+      },
+
+      botMove() {
+        const gameStatus = document.getElementById('gameStatus');
+        const available = this.getAvailableMoves();
+        if (available.length === 0) return;
+
+        // Try to win
+        for (let move of available) {
+          this.board[move] = 'O';
+          if (this.checkWin('O')) {
+            this.updateBoard();
+            gameStatus.textContent = 'Bot wins! 🤖';
+            this.gameActive = false;
+            return;
+          }
+          this.board[move] = '';
+        }
+
+        // Try to block player win
+        for (let move of available) {
+          this.board[move] = 'X';
+          if (this.checkWin('X')) {
+            this.board[move] = 'O';
+            this.updateBoard();
+            gameStatus.textContent = 'Your turn';
+            this.isPlayerTurn = true;
+            return;
+          }
+          this.board[move] = '';
+        }
+
+        // Prefer center, then corners, then random
+        if (available.includes(4)) {
+          this.board[4] = 'O';
+        } else {
+          const corners = available.filter(i => [0, 2, 6, 8].includes(i));
+          this.board[corners.length > 0 ? corners[Math.floor(Math.random() * corners.length)] : available[0]] = 'O';
+        }
+
+        this.updateBoard();
+        this.isPlayerTurn = true;
+        gameStatus.textContent = 'Your turn';
+      },
+
+      reset() {
+        this.board = ['', '', '', '', '', '', '', '', ''];
+        this.gameActive = true;
+        this.isPlayerTurn = true;
+        document.getElementById('gameStatus').textContent = 'Your turn';
+        this.updateBoard();
+      },
+
+      handleClick(e) {
+        const gameBoard = document.getElementById('gameBoard');
+        const resetBtn = document.getElementById('resetBtn');
+        const gameStatus = document.getElementById('gameStatus');
+
+        if (!this.gameActive || !this.isPlayerTurn) return;
+        const btn = e.target.closest('button');
+        if (!btn || btn === resetBtn) return;
+
+        const index = Array.from(gameBoard.querySelectorAll('button')).indexOf(btn);
+        if (this.board[index] !== '') return;
+
+        this.board[index] = 'X';
+        this.updateBoard();
+
+        if (this.checkWin('X')) {
+          gameStatus.textContent = 'You win! 🎉';
+          this.setWinCount(this.getWinCount() + 1);
+          this.gameActive = false;
+          return;
+        }
+
+        if (this.getAvailableMoves().length === 0) {
+          gameStatus.textContent = 'Draw! 🤝';
+          this.gameActive = false;
+          return;
+        }
+
+        this.isPlayerTurn = false;
+        gameStatus.textContent = 'Bot...';
+        setTimeout(() => this.botMove(), 500);
+      },
+    };
+
+    const gameBoard = document.getElementById('gameBoard');
+    const resetBtn = document.getElementById('resetBtn');
+
+    TicTacToe.setWinCount(TicTacToe.getWinCount());
+    gameBoard.addEventListener('click', (e) => TicTacToe.handleClick.call(TicTacToe, e));
+    resetBtn.addEventListener('click', () => TicTacToe.reset());
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.initTicTacToe);
+  } else {
+    window.initTicTacToe();
+  }
+</script>

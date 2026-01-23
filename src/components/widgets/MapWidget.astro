@@ -1,0 +1,65 @@
+---
+---
+
+<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 lg:col-span-2 lg:row-span-2 overflow-hidden">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-[#E5E9F0]">Currently Based In</h3>
+    <span class="text-2xl">📍</span>
+  </div>
+
+  <!-- Interactive Leaflet Map -->
+  <div id="mapContainer" class="mb-4 rounded-lg overflow-hidden border border-[#434C5E] h-100 bg-[#2E3440]" style="position: relative;"></div>
+
+  <div class="flex items-baseline gap-2 mb-2">
+    <p class="text-[#D8DEE9] font-medium">Toronto, ON</p>
+    <p class="text-[#88C0D0] text-lg font-bold" id="currentTime">--:--:-- AM</p>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<script is:inline>
+  window.initMap = function initMap() {
+    const mapContainer = document.getElementById('mapContainer');
+    if (!mapContainer || !window.L) {
+      setTimeout(initMap, 100);
+      return;
+    }
+
+    const map = L.map(mapContainer, {
+      scrollWheelZoom: true,
+      dragging: true,
+      touchZoom: true,
+      zoomControl: false,
+    }).setView([43.6532, -79.3832], 11);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 19,
+    }).addTo(map);
+  };
+
+  window.updateTime = function updateTime() {
+    const currentTimeEl = document.getElementById('currentTime');
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+    if (currentTimeEl) currentTimeEl.textContent = timeString;
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initMap();
+      window.updateTime();
+      setInterval(window.updateTime, 1000);
+    });
+  } else {
+    window.initMap();
+    window.updateTime();
+    setInterval(window.updateTime, 1000);
+  }
+</script>

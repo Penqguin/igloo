@@ -1,0 +1,144 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 lg:col-span-2">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-base font-semibold text-[#E5E9F0]">Recent Commits</h3>
+    <a href="https://github.com/penqguin" target="_blank" rel="noopener noreferrer" class="text-[#88C0D0] hover:text-[#81A1C1] transition-colors">
+      <Icon name="mdi:github" class="w-4 h-4" />
+    </a>
+  </div>
+
+  <div id="commitsList" class="space-y-3 text-xs max-h-48 overflow-y-auto">
+    <p class="text-[#88C0D0]">Loading commits...</p>
+  </div>
+
+  <!-- Language Distribution Bar (client-rendered) -->
+  <div id="languageBarContainer" class="mt-4 pt-3 border-t border-[#434C5E] hidden">
+    <div id="languageBar" class="flex gap-0.5 h-1 rounded overflow-hidden"></div>
+    <div id="languageLegend" class="flex gap-2 mt-2 flex-wrap text-xs"></div>
+  </div>
+
+  <a href="https://github.com/penqguin" target="_blank" rel="noopener noreferrer" class="text-[#88C0D0] hover:text-[#81A1C1] text-xs mt-3 inline-block">
+    View on GitHub →
+  </a>
+</div>
+
+<script is:inline>
+  window.loadCommitsAndLanguages = async function loadCommitsAndLanguages() {
+    const LANGUAGE_COLORS = {
+      TypeScript: '#3178C6', JavaScript: '#F7DF1E', Python: '#3776AB', Astro: '#FF5D01',
+      CSS: '#563D7C', HTML: '#E34C26', Java: '#007396', Rust: '#CE422B', Go: '#00ADD8', Ruby: '#CC342D',
+    };
+
+    const commitsList = document.getElementById('commitsList');
+    const barContainer = document.getElementById('languageBarContainer');
+    const barEl = document.getElementById('languageBar');
+    const legendEl = document.getElementById('languageLegend');
+
+    try {
+      const eventsUrl = 'https://api.github.com/users/Penqguin/events/public?per_page=30';
+      const eventsResp = await fetch(eventsUrl);
+      if (!eventsResp.ok) throw new Error(`HTTP ${eventsResp.status}`);
+
+      const events = await eventsResp.json();
+      const commits = [];
+
+      for (const event of events) {
+        if (event.type === 'PushEvent' && event.payload?.commits) {
+          for (const commit of event.payload.commits) {
+            commits.push({
+              sha: commit.sha,
+              message: commit.message,
+              repo: event.repo.name,
+              date: event.created_at,
+              url: `https://github.com/${event.repo.name}/commit/${commit.sha}`,
+            });
+          }
+        }
+      }
+
+      if (commits.length === 0) {
+        commitsList.innerHTML = '<p class="text-[#88C0D0]">No recent commits found.</p>';
+        return;
+      }
+
+      commits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      const top3 = commits.slice(0, 3);
+      const top10 = commits.slice(0, 10);
+
+      commitsList.innerHTML = '';
+      for (const commit of top3) {
+        const msg = commit.message.split('\n')[0];
+        const sha = commit.sha.substring(0, 7);
+
+        const a = document.createElement('a');
+        a.href = commit.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'block hover:text-[#88C0D0] transition-colors border-l-2 border-[#88C0D0] pl-3 py-1';
+
+        const p1 = document.createElement('p');
+        p1.className = 'text-[#D8DEE9] hover:underline font-medium';
+        p1.textContent = `${commit.repo}: ${msg.substring(0, 40)}`;
+
+        const p2 = document.createElement('p');
+        p2.className = 'text-[#88C0D0] text-xs';
+        p2.textContent = sha;
+
+        a.appendChild(p1);
+        a.appendChild(p2);
+        commitsList.appendChild(a);
+      }
+
+      const langStats = {};
+      for (const commit of top10) {
+        const lang = 'Other';
+        langStats[lang] = (langStats[lang] || 0) + 1;
+      }
+
+      const sorted = Object.entries(langStats).sort((a, b) => b[1] - a[1]);
+      if (sorted.length > 0) {
+        barEl.innerHTML = '';
+        legendEl.innerHTML = '';
+        const total = top10.length;
+
+        for (const [lang, count] of sorted) {
+          const color = LANGUAGE_COLORS[lang] || '#88C0D0';
+          const pct = (count / total) * 100;
+
+          const seg = document.createElement('div');
+          seg.className = 'h-full';
+          seg.style.width = `${pct}%`;
+          seg.style.backgroundColor = color;
+          seg.title = `${lang}: ${count} commits`;
+          barEl.appendChild(seg);
+
+          const legendItem = document.createElement('div');
+          legendItem.className = 'flex items-center gap-1';
+          const dot = document.createElement('div');
+          dot.className = 'w-2 h-2 rounded-full';
+          dot.style.backgroundColor = color;
+          const label = document.createElement('span');
+          label.className = 'text-[#D8DEE9]';
+          label.textContent = lang;
+          legendItem.appendChild(dot);
+          legendItem.appendChild(label);
+          legendEl.appendChild(legendItem);
+        }
+
+        barContainer.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('Failed to load commits:', err);
+      commitsList.innerHTML = '<p class="text-[#88C0D0]">Unable to load recent commits.</p>';
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.loadCommitsAndLanguages);
+  } else {
+    window.loadCommitsAndLanguages();
+  }
+</script>
