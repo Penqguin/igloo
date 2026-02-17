@@ -28,7 +28,7 @@ export const headerData: HeaderData = {
     { text: 'About', href: '/about' },
     { text: 'Projects', href: '/projects' },
     { text: 'Snowboarding', href: '/snowboarding' },
-    { text: 'Resume', href: '/resume' },
+    // { text: 'Resume', href: '/resume' },
   ],
 };
 
