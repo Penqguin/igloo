@@ -28,6 +28,7 @@ export const headerData: HeaderData = {
     { text: 'About', href: '/about' },
     { text: 'Projects', href: '/projects' },
     { text: 'Snowboarding', href: '/snowboarding' },
+    { text: 'Notes', href: 'https://notes.penqguin.com' },
     // { text: 'Resume', href: '/resume' },
   ],
 };
