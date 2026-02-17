@@ -1,19 +1,19 @@
 site:
-  name: 'Michael Maddison'
-  site: 'https://example.com'
+  name: 'Michael M'
+  site: 'https://penqguin.com'
   base: '/'
   trailingSlash: false
 
 metadata:
   title:
-    default: 'Michael Maddison'
+    default: 'Michael M'
     template: '%s — Portfolio'
   description: 'My Dev Portfolio'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: 'Michael Maddison'
+    site_name: 'Michael M'
     images:
       - url: '~/assets/images/igloo-logo.svg'
         width: 1200
