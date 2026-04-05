@@ -27,54 +27,35 @@ import { Icon } from 'astro-icon/components';
 
 <script is:inline>
   window.loadCommitsAndLanguages = async function loadCommitsAndLanguages() {
-    const LANGUAGE_COLORS = {
-      TypeScript: '#3178C6', JavaScript: '#F7DF1E', Python: '#3776AB', Astro: '#FF5D01',
-      CSS: '#563D7C', HTML: '#E34C26', Java: '#007396', Rust: '#CE422B', Go: '#00ADD8', Ruby: '#CC342D',
-    };
-
     const commitsList = document.getElementById('commitsList');
     const barContainer = document.getElementById('languageBarContainer');
     const barEl = document.getElementById('languageBar');
     const legendEl = document.getElementById('languageLegend');
 
     try {
-      const eventsUrl = 'https://api.github.com/users/Penqguin/events/public?per_page=30';
-      const eventsResp = await fetch(eventsUrl);
-      if (!eventsResp.ok) throw new Error(`HTTP ${eventsResp.status}`);
+      const apiUrl = 'https://katib.jasoncameron.dev/v2/commits/latest?username=Penqguin';
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-      const events = await eventsResp.json();
-      const commits = [];
-
-      for (const event of events) {
-        if (event.type === 'PushEvent' && event.payload?.commits) {
-          for (const commit of event.payload.commits) {
-            commits.push({
-              sha: commit.sha,
-              message: commit.message,
-              repo: event.repo.name,
-              date: event.created_at,
-              url: `https://github.com/${event.repo.name}/commit/${commit.sha}`,
-            });
-          }
-        }
-      }
+      const data = await response.json();
+      const commits = data.commits || [];
+      const languages = data.languages || [];
 
       if (commits.length === 0) {
         commitsList.innerHTML = '<p class="text-[#88C0D0]">No recent commits found.</p>';
         return;
       }
 
-      commits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      const top3 = commits.slice(0, 3);
-      const top10 = commits.slice(0, 10);
-
+      // Display top 3 commits
       commitsList.innerHTML = '';
-      for (const commit of top3) {
-        const msg = commit.message.split('\n')[0];
-        const sha = commit.sha.substring(0, 7);
+      const displayCommits = commits.slice(0, 3);
+      
+      for (const commit of displayCommits) {
+        const msg = commit.messageHeadline;
+        const sha = commit.oid.substring(0, 7);
 
         const a = document.createElement('a');
-        a.href = commit.url;
+        a.href = commit.commitUrl;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         a.className = 'block hover:text-[#88C0D0] transition-colors border-l-2 border-[#88C0D0] pl-3 py-1';
@@ -92,27 +73,22 @@ import { Icon } from 'astro-icon/components';
         commitsList.appendChild(a);
       }
 
-      const langStats = {};
-      for (const commit of top10) {
-        const lang = 'Other';
-        langStats[lang] = (langStats[lang] || 0) + 1;
-      }
-
-      const sorted = Object.entries(langStats).sort((a, b) => b[1] - a[1]);
-      if (sorted.length > 0) {
+      // Language Distribution Bar
+      if (languages.length > 0) {
         barEl.innerHTML = '';
         legendEl.innerHTML = '';
-        const total = top10.length;
+        
+        const totalSize = languages.reduce((acc, lang) => acc + lang.size, 0);
 
-        for (const [lang, count] of sorted) {
-          const color = LANGUAGE_COLORS[lang] || '#88C0D0';
-          const pct = (count / total) * 100;
+        for (const lang of languages) {
+          const color = lang.color || '#88C0D0';
+          const pct = (lang.size / totalSize) * 100;
 
           const seg = document.createElement('div');
           seg.className = 'h-full';
           seg.style.width = `${pct}%`;
           seg.style.backgroundColor = color;
-          seg.title = `${lang}: ${count} commits`;
+          seg.title = `${lang.name}: ${Math.round(pct)}%`;
           barEl.appendChild(seg);
 
           const legendItem = document.createElement('div');
@@ -122,7 +98,7 @@ import { Icon } from 'astro-icon/components';
           dot.style.backgroundColor = color;
           const label = document.createElement('span');
           label.className = 'text-[#D8DEE9]';
-          label.textContent = lang;
+          label.textContent = lang.name;
           legendItem.appendChild(dot);
           legendItem.appendChild(label);
           legendEl.appendChild(legendItem);
