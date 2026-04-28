@@ -2,7 +2,6 @@
 import MapWidget from './widgets/MapWidget.astro';
 import CommitsWidget from './widgets/CommitsWidget.astro';
 import TicTacToeWidget from './widgets/TicTacToeWidget.astro';
-import ContactWidget from './widgets/ContactWidget.astro';
 ---
 
 <section class="bg-[#2E3440] py-16">
@@ -10,10 +9,9 @@ import ContactWidget from './widgets/ContactWidget.astro';
     <h2 class="text-3xl font-bold text-[#E5E9F0] mb-12">Dashboard / Highlights</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <MapWidget />
       <CommitsWidget />
+      <MapWidget />
       <TicTacToeWidget />
-      <ContactWidget />
     </div>
   </div>
 </section>

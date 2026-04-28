@@ -1,14 +1,14 @@
 ---
 ---
 
-<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 lg:col-span-2 lg:row-span-2 overflow-hidden">
+<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 overflow-hidden">
   <div class="flex items-center justify-between mb-4">
     <h3 class="text-lg font-semibold text-[#E5E9F0]">Currently Based In</h3>
     <span class="text-2xl">📍</span>
   </div>
 
   <!-- Interactive Leaflet Map -->
-  <div id="mapContainer" class="mb-4 rounded-lg overflow-hidden border border-[#434C5E] h-100 bg-[#2E3440]" style="position: relative;"></div>
+  <div id="mapContainer" class="mb-4 rounded-lg overflow-hidden border border-[#434C5E] h-48 bg-[#2E3440]" style="position: relative;"></div>
 
   <div class="flex items-baseline gap-2 mb-2">
     <p class="text-[#D8DEE9] font-medium">Toronto, ON</p>
@@ -32,6 +32,7 @@
       dragging: true,
       touchZoom: true,
       zoomControl: false,
+      attributionControl: false,
     }).setView([43.6532, -79.3832], 11);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {

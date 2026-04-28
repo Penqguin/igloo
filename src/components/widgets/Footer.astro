@@ -7,33 +7,53 @@ const { contentLinks } = footerData;
 ---
 
 <footer class="bg-[#3B4252] border-t border-[#434C5E] mt-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-      <!-- Social Links -->
-      <div class="flex gap-6">
-        {contentLinks.map((link) => (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
-            aria-label={link.text}
-          >
-            <Icon name={link.logo} class="w-5 h-5" />
-          </a>
-        ))}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+      <!-- Left side: Social & Copyright -->
+      <div class="flex items-center gap-6 text-[#D8DEE9]">
+        <span class="hidden md:inline text-[#434C5E]">|</span>
+        <p class="opacity-75">&copy; 2025 Michael M</p>
       </div>
 
-      <!-- Status Indicator -->
-      <div class="flex items-center gap-2 text-[#D8DEE9] text-sm">
-        <span class="w-2 h-2 rounded-full bg-[#A3BE8C]"></span>
-        <span>All Services Nominal</span>
+      <!-- Right side: Status & Visitors & Attribution -->
+      <div class="flex flex-col md:flex-row items-center gap-6 text-[#D8DEE9]">
+        
+        <span class="hidden md:inline text-[#434C5E]">|</span>
+        
+        <div class="flex items-center gap-4">
+          {contentLinks.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#88C0D0] transition-colors duration-200"
+              aria-label={link.text}
+            >
+              <Icon name={link.logo} class="w-5 h-5" />
+            </a>
+          ))}
+          <span class="hidden md:inline text-[#434C5E]">|</span>
+          <p class="opacity-75">Visitors: <span id="visitorCount" class="font-mono text-[#88C0D0]">...</span></p>
+        </div>
       </div>
-    </div>
-
-    <!-- Copyright -->
-    <div class="mt-8 pt-8 border-t border-[#434C5E] text-center text-[#D8DEE9] text-sm opacity-75">
-      <p>&copy; 2025 Michael M</p>
     </div>
   </div>
 </footer>
+
+<script is:inline define:vars={{ isDev: import.meta.env.DEV }}>
+  async function updateVisitorCount() {
+    try {
+      // Use /get in dev mode to avoid incrementing the counter
+      const endpoint = isDev ? 'get' : 'hit';
+      const res = await fetch(`https://abacus.jsn.cam/${endpoint}/igloo/site-visits`);
+      const data = await res.json();
+      const visitorCountEl = document.getElementById('visitorCount');
+      if (visitorCountEl) {
+        visitorCountEl.textContent = data.value.toLocaleString();
+      }
+    } catch (e) {
+      console.error('Failed to update visitor count', e);
+    }
+  }
+  updateVisitorCount();
+</script>

@@ -1,11 +1,20 @@
 ---
 ---
 
-<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-4 hover:border-[#88C0D0] transition-colors duration-200 flex flex-col items-center justify-center">
+<div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 flex flex-col items-center justify-center">
   <div class="mb-3 text-center">
     <p class="text-sm font-semibold text-[#E5E9F0]">Tic Tac Toe</p>
-    <p class="text-2xl font-bold text-[#88C0D0]" id="winCount">0</p>
-    <p class="text-[#D8DEE9] text-xs">wins</p>
+    <div class="flex justify-center gap-4 mt-1">
+      <div>
+        <p class="text-xl font-bold text-[#88C0D0]" id="sessionWins">0</p>
+        <p class="text-[#D8DEE9] text-[10px] uppercase tracking-wider">Session</p>
+      </div>
+      <div class="w-px bg-[#434C5E] h-8 self-center"></div>
+      <div>
+        <p class="text-xl font-bold text-[#81A1C1]" id="globalWins">0</p>
+        <p class="text-[#D8DEE9] text-[10px] uppercase tracking-wider">Global</p>
+      </div>
+    </div>
   </div>
 
   <!-- Compact Game Board -->
@@ -22,28 +31,54 @@
 
   <button
     id="resetBtn"
-    class="px-3 py-1 bg-[#88C0D0] text-[#2E3440] rounded text-xs font-semibold hover:bg-[#81A1C1] transition-colors duration-200 w-full"
+    class="px-3 py-1 bg-[#88C0D0] text-[#2E3440] rounded text-xs font-semibold hover:bg-[#81A1C1] transition-colors duration-200 w-full mb-2"
   >
     New Game
   </button>
+
+  <a 
+    href="https://github.com/JasonLovesDoggo/abacus" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    class="text-[9px] text-[#D8DEE9] opacity-40 hover:opacity-100 hover:text-[#88C0D0] transition-all self-end"
+  >
+    Powered by Abacus
+  </a>
 </div>
 
 <script is:inline>
-  window.initTicTacToe = function initTicTacToe() {
+  window.initTicTacToe = async function initTicTacToe() {
     const TicTacToe = {
       board: ['', '', '', '', '', '', '', '', ''],
       gameActive: true,
       isPlayerTurn: true,
+      sessionWins: 0,
       winConditions: [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]],
 
-      getWinCount() {
-        const wins = localStorage.getItem('tictactoe_wins');
-        return wins ? parseInt(wins) : 0;
+      async updateGlobalWins() {
+        try {
+          const res = await fetch('https://abacus.jsn.cam/get/igloo/tictactoe-wins');
+          const data = await res.json();
+          const winCountEl = document.getElementById('globalWins');
+          if (winCountEl) winCountEl.textContent = data.value || 0;
+        } catch (e) {
+          console.error('Failed to fetch win count', e);
+        }
       },
 
-      setWinCount(count) {
-        localStorage.setItem('tictactoe_wins', count.toString());
-        document.getElementById('winCount').textContent = count;
+      async incrementWins() {
+        this.sessionWins++;
+        const sessionWinsEl = document.getElementById('sessionWins');
+        if (sessionWinsEl) sessionWinsEl.textContent = this.sessionWins;
+
+        try {
+          const res = await fetch('https://abacus.jsn.cam/hit/igloo/tictactoe-wins');
+          const data = await res.json();
+          const winCountEl = document.getElementById('globalWins');
+          if (winCountEl) winCountEl.textContent = data.value;
+        } catch (e) {
+          console.error('Failed to increment win count', e);
+        }
       },
 
       checkWin(player) {
@@ -116,7 +151,7 @@
         this.updateBoard();
       },
 
-      handleClick(e) {
+      async handleClick(e) {
         const gameBoard = document.getElementById('gameBoard');
         const resetBtn = document.getElementById('resetBtn');
         const gameStatus = document.getElementById('gameStatus');
@@ -133,7 +168,7 @@
 
         if (this.checkWin('X')) {
           gameStatus.textContent = 'You win! 🎉';
-          this.setWinCount(this.getWinCount() + 1);
+          await this.incrementWins();
           this.gameActive = false;
           return;
         }
@@ -153,7 +188,7 @@
     const gameBoard = document.getElementById('gameBoard');
     const resetBtn = document.getElementById('resetBtn');
 
-    TicTacToe.setWinCount(TicTacToe.getWinCount());
+    await TicTacToe.updateGlobalWins();
     gameBoard.addEventListener('click', (e) => TicTacToe.handleClick.call(TicTacToe, e));
     resetBtn.addEventListener('click', () => TicTacToe.reset());
   };

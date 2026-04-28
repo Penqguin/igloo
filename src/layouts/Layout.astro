@@ -15,12 +15,15 @@ const description = 'My portfolio website';
 <html lang="en">
   <head>
     <link rel="icon" href="/assets/favicons/igloo-logo.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="description" content={description} />
   </head>
-  <body class="bg-[#2E3440] text-[#D8DEE9] font-sans antialiased">
+  <body class="bg-[#2E3440] text-[#D8DEE9] font-roboto-mono antialiased">
     <Header />
     <main class="min-h-screen">
       <slot />
