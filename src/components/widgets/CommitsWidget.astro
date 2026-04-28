@@ -10,14 +10,13 @@ import { Icon } from 'astro-icon/components';
     </a>
   </div>
 
-  <div id="commitsList" class="space-y-3 text-xs max-h-48 overflow-y-auto">
-    <p class="text-[#88C0D0]">Loading commits...</p>
-  </div>
+  <div id="commitsList" class="space-y-3 text-xs max-h-48 overflow-y-auto"></div>
 
   <!-- Language Distribution Bar (client-rendered) -->
-  <div id="languageBarContainer" class="mt-4 pt-3 border-t border-[#434C5E] hidden">
-    <div id="languageBar" class="flex gap-0.5 h-1 rounded overflow-hidden"></div>
-    <div id="languageLegend" class="flex gap-2 mt-2 flex-wrap text-xs"></div>
+  <div id="languageBarContainer" class="relative mt-4 pt-3 border-t border-[#434C5E] hidden">
+    <div id="languageBar" class="flex gap-0.5 h-2 rounded overflow-hidden"></div>
+    <div id="languageTooltip" style="display:none;" class="absolute -top-7 left-0 text-xs px-2 py-1 rounded bg-[#2E3440] text-[#ECEFF4] shadow-sm pointer-events-none z-50"></div>
+    <div id="languageLegend" class="hidden"></div>
   </div>
 
   <a href="https://github.com/penqguin" target="_blank" rel="noopener noreferrer" class="text-[#88C0D0] hover:text-[#81A1C1] text-xs mt-3 inline-block">
@@ -77,31 +76,43 @@ import { Icon } from 'astro-icon/components';
       if (languages.length > 0) {
         barEl.innerHTML = '';
         legendEl.innerHTML = '';
-        
+
         const totalSize = languages.reduce((acc, lang) => acc + lang.size, 0);
+
+        // tooltip element (for styled hover info)
+        const tooltip = document.getElementById('languageTooltip');
 
         for (const lang of languages) {
           const color = lang.color || '#88C0D0';
           const pct = (lang.size / totalSize) * 100;
 
           const seg = document.createElement('div');
-          seg.className = 'h-full';
+          seg.className = 'h-full cursor-pointer';
           seg.style.width = `${pct}%`;
           seg.style.backgroundColor = color;
-          seg.title = `${lang.name}: ${Math.round(pct)}%`;
+          seg.dataset.name = lang.name;
+          seg.dataset.pct = `${Math.round(pct)}`;
           barEl.appendChild(seg);
 
-          const legendItem = document.createElement('div');
-          legendItem.className = 'flex items-center gap-1';
-          const dot = document.createElement('div');
-          dot.className = 'w-2 h-2 rounded-full';
-          dot.style.backgroundColor = color;
-          const label = document.createElement('span');
-          label.className = 'text-[#D8DEE9]';
-          label.textContent = lang.name;
-          legendItem.appendChild(dot);
-          legendItem.appendChild(label);
-          legendEl.appendChild(legendItem);
+          // show styled tooltip on hover
+          seg.addEventListener('mouseenter', (ev) => {
+            if (!tooltip) return;
+            tooltip.textContent = `${seg.dataset.name}: ${seg.dataset.pct}%`;
+            tooltip.style.display = 'block';
+          });
+
+          seg.addEventListener('mousemove', (ev) => {
+            if (!tooltip) return;
+            const barRect = barEl.getBoundingClientRect();
+            const x = Math.min(Math.max(ev.clientX - barRect.left, 8), barRect.width - 8);
+            tooltip.style.left = `${x}px`;
+            tooltip.style.transform = 'translateX(-50%)';
+          });
+
+          seg.addEventListener('mouseleave', () => {
+            if (!tooltip) return;
+            tooltip.style.display = 'none';
+          });
         }
 
         barContainer.classList.remove('hidden');

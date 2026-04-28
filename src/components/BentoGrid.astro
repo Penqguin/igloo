@@ -25,17 +25,6 @@ const { widgets = [] } = Astro.props;
     {widgets.length === 0 ? (
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Placeholder widgets showing structure - ready for data injection */}
-        
-        {/* Connect/Status Widget */}
-        <div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-[#E5E9F0]">Connect</h3>
-            <span class="text-2xl">🔗</span>
-          </div>
-          <p class="text-[#D8DEE9] text-sm">Availability status loading...</p>
-          <p class="text-[#88C0D0] text-xs mt-4 opacity-75">[Data placeholder]</p>
-        </div>
-
         {/* Location Widget */}
         <div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200">
           <div class="flex items-center justify-between mb-4">
