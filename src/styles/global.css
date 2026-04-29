@@ -3,17 +3,33 @@
 
 @theme {
   --font-roboto-mono: "Roboto Mono", monospace;
-  --color-nord-polarnite-dark: #2e3440;
-  --color-nord-polarnite-medium: #3b4252;
-  --color-nord-polarnite-light: #434c5e;
-  --color-nord-snowstorm-primary: #d8dee9;
-  --color-nord-snowstorm-secondary: #eceff4;
-  --color-nord-snowstorm-header: #e5e9f0;
-  --color-nord-frost-teal: #88c0d0;
-  --color-nord-frost-blue: #81a1c1;
-  --color-nord-aurora-red: #bf616a;
-  --color-nord-aurora-orange: #d08770;
-  --color-nord-aurora-yellow: #ebcb8b;
-  --color-nord-aurora-green: #a3be8c;
-  --color-nord-aurora-purple: #b48ead;
+  
+  /* Nord Color Palette */
+  --color-nord-0: #2e3440; /* Polar Night - Darkest */
+  --color-nord-1: #3b4252; /* Polar Night - Medium */
+  --color-nord-2: #434c5e; /* Polar Night - Lightest */
+  --color-nord-3: #4c566a; /* Polar Night - Selection/Lighter */
+  --color-nord-4: #d8dee9; /* Snow Storm - Primary Text */
+  --color-nord-5: #e5e9f0; /* Snow Storm - Header Text */
+  --color-nord-6: #eceff4; /* Snow Storm - Lightest Text */
+  --color-nord-7: #8fbcbb; /* Frost - Cyan */
+  --color-nord-8: #88c0d0; /* Frost - Teal (Highlight) */
+  --color-nord-9: #81a1c1; /* Frost - Blue */
+  --color-nord-10: #5e81ac; /* Frost - Dark Blue */
+  --color-nord-11: #bf616a; /* Aurora - Red */
+  --color-nord-12: #d08770; /* Aurora - Orange */
+  --color-nord-13: #ebcb8b; /* Aurora - Yellow */
+  --color-nord-14: #a3be8c; /* Aurora - Green */
+  --color-nord-15: #b48ead; /* Aurora - Purple */
+
+  /* Semantic Aliases */
+  --color-bg-dark: var(--color-nord-0);
+  --color-bg-card: var(--color-nord-1);
+  --color-border-dim: var(--color-nord-2);
+  --color-border-bright: var(--color-nord-8);
+  --color-text-dim: var(--color-nord-4);
+  --color-text-header: var(--color-nord-5);
+  --color-text-highlight: var(--color-nord-8);
+  --color-accent: var(--color-nord-8);
+  --color-accent-hover: var(--color-nord-9);
 }

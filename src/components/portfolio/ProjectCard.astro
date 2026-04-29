@@ -16,7 +16,7 @@ const { name, title, description, image, tags = [], link } = Astro.props;
 
 <article 
   data-project-name={name}
-  class="bg-[#3B4252] border border-[#434C5E] rounded-lg overflow-hidden hover:border-[#88C0D0] transition-all duration-200 group cursor-pointer"
+  class="bg-bg-card border border-border-dim rounded-lg overflow-hidden hover:border-border-bright transition-all duration-200 group cursor-pointer"
 >
   {image && (
     <img 
@@ -26,10 +26,10 @@ const { name, title, description, image, tags = [], link } = Astro.props;
     />
   )}
   <div class="p-6">
-    <h3 class="text-xl font-bold text-[#E5E9F0] mb-2 group-hover:text-[#88C0D0] transition-colors">
+    <h3 class="text-xl font-bold text-text-header mb-2 group-hover:text-text-highlight transition-colors">
       {title}
     </h3>
-    <p class="text-[#D8DEE9] mb-4 leading-relaxed text-sm">
+    <p class="text-text-dim mb-4 leading-relaxed text-sm">
       {description}
     </p>
 
@@ -37,7 +37,7 @@ const { name, title, description, image, tags = [], link } = Astro.props;
     {tags.length > 0 && (
       <div class="flex flex-wrap gap-2 mb-4">
         {tags.map((tag) => (
-          <span class="text-xs bg-[#434C5E] text-[#88C0D0] px-3 py-1 rounded-full border border-[#88C0D0] border-opacity-30 hover:border-opacity-100 transition-colors">
+          <span class="text-xs bg-border-dim text-text-highlight px-3 py-1 rounded-full border border-accent border-opacity-30 hover:border-opacity-100 transition-colors">
             {tag}
           </span>
         ))}
@@ -50,7 +50,7 @@ const { name, title, description, image, tags = [], link } = Astro.props;
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-block mt-2 px-4 py-2 bg-[#88C0D0] text-[#2E3440] rounded-lg font-medium hover:bg-[#81A1C1] transition-colors duration-200 text-sm"
+        class="inline-block mt-2 px-4 py-2 bg-accent text-bg-dark rounded-lg font-medium hover:bg-accent-hover transition-colors duration-200 text-sm"
       >
         View Project →
       </a>

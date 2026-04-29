@@ -4,15 +4,15 @@ import { Icon } from 'astro-icon/components';
 import { projects } from '../navigation';
 ---
 <Layout title="Projects" description="View my portfolio projects">
-	<main class="bg-[#2E3440] min-h-screen py-16">
+	<main class="bg-bg-dark min-h-screen py-16">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			{/* Header */}
 			<div class="mb-12">
 				<div class="flex items-center gap-3 mb-4">
-					<Icon name="mdi:folder" class="text-4xl md:text-5xl text-[#88C0D0]"></Icon>
-					<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0]">Projects</h1>
+					<Icon name="mdi:folder" class="text-4xl md:text-5xl text-text-highlight"></Icon>
+					<h1 class="text-4xl md:text-5xl font-bold text-text-header">Projects</h1>
 				</div>
-				<p class="text-lg text-[#D8DEE9] max-w-2xl">
+				<p class="text-lg text-text-dim max-w-2xl">
 					A collection of projects I've worked on, showcasing my work in systems development, web technologies, and competitive programming.
 				</p>
 			</div>
@@ -22,7 +22,7 @@ import { projects } from '../navigation';
 				{projects.map((project) => (
 					<div 
 						data-project-name={project.name}
-						class="group bg-[#3B4252] border border-[#434C5E] rounded-xl hover:border-[#88C0D0] transition-all duration-300 flex flex-col h-full cursor-pointer"
+						class="group bg-bg-card border border-border-dim rounded-xl hover:border-border-bright transition-all duration-300 flex flex-col h-full cursor-pointer"
 					>
 						{/* Thumbnail with padding */}
 						<div class="p-4">
@@ -39,23 +39,23 @@ import { projects } from '../navigation';
 						<div class="px-6 pb-6 flex flex-col flex-grow">
 							{/* Title and Date */}
 							<div class="flex items-center justify-between mb-3">
-								<h3 class="text-xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
+								<h3 class="text-xl font-bold text-text-header group-hover:text-text-highlight transition-colors">
 									{project.title}
 								</h3>
-								<span class="text-sm text-[#D8DEE9] opacity-60 italic">{project.date}</span>
+								<span class="text-sm text-text-dim opacity-60 italic">{project.date}</span>
 							</div>
 
 							{/* Description */}
-							<p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 flex-grow">
+							<p class="text-text-dim text-sm leading-relaxed mb-4 flex-grow">
 								{project.description}
 							</p>
 
 							{/* Tags with Icon */}
 							<div class="flex items-center gap-2 mt-auto">
-								<Icon name="mdi:tag" class="w-4 h-4 text-[#88C0D0] shrink-0" />
+								<Icon name="mdi:tag" class="w-4 h-4 text-text-highlight shrink-0" />
 								<div class="flex flex-wrap gap-x-3 gap-y-1">
 									{project.tags.map((tag) => (
-										<span class="text-[11px] text-[#88C0D0] font-medium tracking-wide uppercase">
+										<span class="text-[11px] text-text-highlight font-medium tracking-wide uppercase">
 											{tag}
 										</span>
 									))}
@@ -67,7 +67,7 @@ import { projects } from '../navigation';
 								href={project.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="mt-4 inline-flex items-center gap-2 text-xs text-[#88C0D0] hover:text-[#81A1C1] transition-colors font-semibold"
+								class="mt-4 inline-flex items-center gap-2 text-xs text-text-highlight hover:text-accent-hover transition-colors font-semibold"
 							>
 								<Icon name="mdi:github" class="w-4 h-4" />
 								View Source Code

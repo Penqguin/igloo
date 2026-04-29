@@ -6,19 +6,18 @@ import { Icon } from 'astro-icon/components';
 const { contentLinks } = footerData;
 ---
 
-<footer class="bg-[#3B4252] border-t border-[#434C5E] mt-12">
+<footer class="bg-bg-card border-t border-border-dim mt-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
       <!-- Left side: Social & Copyright -->
-      <div class="flex items-center gap-6 text-[#D8DEE9]">
-        <span class="hidden md:inline text-[#434C5E]">|</span>
-        <p class="opacity-75">&copy; 2025 Michael M</p>
+      <div class="flex items-center gap-6 text-text-dim">
+        <p class="opacity-75">&copy; 2026 Michael Maddison</p>
       </div>
 
       <!-- Right side: Status & Visitors & Attribution -->
-      <div class="flex flex-col md:flex-row items-center gap-6 text-[#D8DEE9]">
+      <div class="flex flex-col md:flex-row items-center gap-6 text-text-dim">
         
-        <span class="hidden md:inline text-[#434C5E]">|</span>
+        <span class="hidden md:inline text-border-dim">|</span>
         
         <div class="flex items-center gap-4">
           {contentLinks.map((link) => (
@@ -26,14 +25,14 @@ const { contentLinks } = footerData;
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-[#88C0D0] transition-colors duration-200"
+              class="hover:text-text-highlight transition-colors duration-200"
               aria-label={link.text}
             >
               <Icon name={link.logo} class="w-5 h-5" />
             </a>
           ))}
-          <span class="hidden md:inline text-[#434C5E]">|</span>
-          <p class="opacity-75">Visitors: <span id="visitorCount" class="font-mono text-[#88C0D0]">...</span></p>
+          <span class="hidden md:inline text-border-dim">|</span>
+          <p class="opacity-75">Visitors: <span id="visitorCount" class="font-mono text-text-highlight">...</span></p>
         </div>
       </div>
     </div>

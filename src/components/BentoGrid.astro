@@ -18,50 +18,50 @@ interface Props {
 const { widgets = [] } = Astro.props;
 ---
 
-<section class="bg-[#2E3440] py-12">
+<section class="bg-bg-dark py-12">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-[#E5E9F0] mb-12">Dashboard</h2>
+    <h2 class="text-3xl font-bold text-text-header mb-12">Dashboard</h2>
 
     {widgets.length === 0 ? (
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Placeholder widgets showing structure - ready for data injection */}
         {/* Location Widget */}
-        <div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200">
+        <div class="bg-bg-card border border-border-dim rounded-lg p-6 hover:border-border-bright transition-colors duration-200">
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-[#E5E9F0]">Location</h3>
+            <h3 class="text-lg font-semibold text-text-header">Location</h3>
             <span class="text-2xl">📍</span>
           </div>
-          <p class="text-[#D8DEE9] text-sm">Current location data loading...</p>
-          <p class="text-[#88C0D0] text-xs mt-4 opacity-75">[Data placeholder]</p>
+          <p class="text-text-dim text-sm">Current location data loading...</p>
+          <p class="text-text-highlight text-xs mt-4 opacity-75">[Data placeholder]</p>
         </div>
 
         {/* Stats Widget */}
-        <div class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200">
+        <div class="bg-bg-card border border-border-dim rounded-lg p-6 hover:border-border-bright transition-colors duration-200">
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-[#E5E9F0]">Stats</h3>
+            <h3 class="text-lg font-semibold text-text-header">Stats</h3>
             <span class="text-2xl">📊</span>
           </div>
-          <p class="text-[#D8DEE9] text-sm">Coding languages & commit stats loading...</p>
-          <p class="text-[#88C0D0] text-xs mt-4 opacity-75">[Data placeholder]</p>
+          <p class="text-text-dim text-sm">Coding languages & commit stats loading...</p>
+          <p class="text-text-highlight text-xs mt-4 opacity-75">[Data placeholder]</p>
         </div>
       </div>
     ) : (
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {widgets.map((widget) => (
           <div
-            class={`bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-colors duration-200 ${
+            class={`bg-bg-card border border-border-dim rounded-lg p-6 hover:border-border-bright transition-colors duration-200 ${
               widget.colSpan === 2 ? 'md:col-span-2' : ''
             } ${widget.rowSpan === 2 ? 'md:row-span-2' : ''}`}
           >
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-[#E5E9F0]">{widget.title}</h3>
+              <h3 class="text-lg font-semibold text-text-header">{widget.title}</h3>
               {widget.icon && <span class="text-2xl">{widget.icon}</span>}
             </div>
             {widget.value && (
-              <p class="text-3xl font-bold text-[#88C0D0] mb-2">{widget.value}</p>
+              <p class="text-3xl font-bold text-text-highlight mb-2">{widget.value}</p>
             )}
             {widget.content && (
-              <p class="text-[#D8DEE9] text-sm">{widget.content}</p>
+              <p class="text-text-dim text-sm">{widget.content}</p>
             )}
           </div>
         ))}

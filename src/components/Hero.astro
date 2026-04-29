@@ -20,23 +20,23 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-[#2E3440] text-[#D8DEE9] py-16 md:py-24">
+<section class="bg-bg-dark text-text-dim py-16 md:py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Left Column: Text Content -->
       <div class="order-2 md:order-1">
         {/* Headline */}
-        <h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-2 leading-tight">
+        <h1 class="text-4xl md:text-5xl font-bold text-text-header mb-2 leading-tight">
           {headline}
         </h1>
 
         {/* Sub-headline */}
-        <h2 class="text-xl md:text-2xl text-[#88C0D0] mb-6 font-medium">
+        <h2 class="text-xl md:text-2xl text-text-highlight mb-6 font-medium">
           {subheadline}
         </h2>
 
         {/* Bio Paragraph */}
-        <p class="text-base md:text-lg leading-relaxed text-[#D8DEE9] mb-8 max-w-md">
+        <p class="text-base md:text-lg leading-relaxed text-text-dim mb-8 max-w-md">
           {bio}
         </p>
 
@@ -48,7 +48,7 @@ const {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200"
+                class="text-text-dim hover:text-text-highlight transition-colors duration-200"
                 aria-label={link.label}
               >
                 {link.label === 'GitHub' && (
@@ -67,7 +67,7 @@ const {
       {profileImage && (
         <div class="order-1 md:order-2 flex justify-center md:justify-end">
           <div class="relative">
-            <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-100 lg:h-100 rounded-lg overflow-hidden border-4 border-[#88C0D0] shadow-lg">
+            <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-100 lg:h-100 rounded-lg overflow-hidden border-4 border-accent shadow-lg">
               <img
                 src={profileImage}
                 alt="Profile"
@@ -75,7 +75,7 @@ const {
               />
             </div>
             {/* Decorative accent */}
-            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-[#3B4252] rounded-lg opacity-50"></div>
+            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-bg-card rounded-lg opacity-50"></div>
           </div>
         </div>
       )}

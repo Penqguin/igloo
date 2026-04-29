@@ -4,22 +4,22 @@ import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="About" description="Learn more about me">
-	<main class="bg-[#2E3440] min-h-screen py-16">
+	<main class="bg-bg-dark min-h-screen py-16">
 		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 			{/* Header */}
 			<div class="mb-12">
 				<div class="flex items-center gap-3">
-					<Icon name="mdi:account" class="text-4xl md:text-5xl text-[#88C0D0]"></Icon>
-					<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0]">About</h1>
+					<Icon name="mdi:account" class="text-4xl md:text-5xl text-text-highlight"></Icon>
+					<h1 class="text-4xl md:text-5xl font-bold text-text-header">About</h1>
 				</div>
 			</div>
 
 			{/* Content Sections */}
 			<div class="space-y-8">
 				{/* Bio Section */}
-				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
-					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-4">Background</h2>
-					<div class="space-y-4 text-[#D8DEE9] leading-relaxed">
+				<section class="bg-bg-card border border-border-dim rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-text-header mb-4">Background</h2>
+					<div class="space-y-4 text-text-dim leading-relaxed">
 						<p>
 							I'm Michael M, a developer and student with a passion for building solutions to complex problems. I'm currently studying computer science and have a deep interest in systems development and data science.
 						</p>
@@ -33,14 +33,14 @@ import { Icon } from 'astro-icon/components';
 				</section>
 
 				{/* Skills Section */}
-				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
-					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Skills & Technologies</h2>
+				<section class="bg-bg-card border border-border-dim rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-text-header mb-6">Skills & Technologies</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
-							<h3 class="text-[#88C0D0] font-semibold mb-3">Languages</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Languages</h3>
 							<div class="flex flex-wrap gap-2">
 								{['Python', 'TypeScript', 'JavaScript', 'C', 'Java'].map((skill) => (
-									<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm font-medium hover:bg-[#88C0D0] hover:text-[#2E3440] transition-colors">
+									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
 								))}
@@ -48,10 +48,10 @@ import { Icon } from 'astro-icon/components';
 						</div>
 
 						<div>
-							<h3 class="text-[#88C0D0] font-semibold mb-3">Web Development</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Web Development</h3>
 							<div class="flex flex-wrap gap-2">
 								{['Astro', 'React', 'Tailwind CSS', 'Node.js'].map((skill) => (
-									<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm font-medium hover:bg-[#88C0D0] hover:text-[#2E3440] transition-colors">
+									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
 								))}
@@ -59,10 +59,10 @@ import { Icon } from 'astro-icon/components';
 						</div>
 
 						<div>
-							<h3 class="text-[#88C0D0] font-semibold mb-3">Systems & Tools</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Systems & Tools</h3>
 							<div class="flex flex-wrap gap-2">
 								{['Windows', 'MacOS', 'Git', 'Docker', 'Visual Studio Code'].map((skill) => (
-									<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm font-medium hover:bg-[#88C0D0] hover:text-[#2E3440] transition-colors">
+									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
 								))}
@@ -70,10 +70,10 @@ import { Icon } from 'astro-icon/components';
 						</div>
 
 						<div>
-							<h3 class="text-[#88C0D0] font-semibold mb-3">Data Science</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Data Science</h3>
 							<div class="flex flex-wrap gap-2">
 								{['Machine Learning', 'Data Analysis', 'Pandas', 'NumPy'].map((skill) => (
-									<span class="px-3 py-1 bg-[#434C5E] text-[#D8DEE9] rounded-lg text-sm font-medium hover:bg-[#88C0D0] hover:text-[#2E3440] transition-colors">
+									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
 								))}
@@ -83,27 +83,27 @@ import { Icon } from 'astro-icon/components';
 				</section>
 
 				{/* Experience Section */}
-				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
-					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Experience & Education</h2>
+				<section class="bg-bg-card border border-border-dim rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-text-header mb-6">Experience & Education</h2>
 					<div class="space-y-6">
-						<div class="border-l-4 border-[#88C0D0] pl-6 py-2">
-							<h3 class="text-[#E5E9F0] font-semibold text-lg">Computer Science Student</h3>
-							<p class="text-[#88C0D0] text-sm font-medium">University</p>
-							<p class="text-[#D8DEE9] mt-2">Currently pursuing my degree in computer science with focus on systems and data science</p>
+						<div class="border-l-4 border-accent pl-6 py-2">
+							<h3 class="text-text-header font-semibold text-lg">Computer Science Student</h3>
+							<p class="text-text-highlight text-sm font-medium">University</p>
+							<p class="text-text-dim mt-2">Currently pursuing my degree in computer science with focus on systems and data science</p>
 						</div>
 
-						<div class="border-l-4 border-[#88C0D0] pl-6 py-2">
-							<h3 class="text-[#E5E9F0] font-semibold text-lg">Competitive Programmer</h3>
-							<p class="text-[#88C0D0] text-sm font-medium">Algorithms & Problem Solving</p>
-							<p class="text-[#D8DEE9] mt-2">Actively solving algorithmic challenges and participating in programming competitions</p>
+						<div class="border-l-4 border-accent pl-6 py-2">
+							<h3 class="text-text-header font-semibold text-lg">Competitive Programmer</h3>
+							<p class="text-text-highlight text-sm font-medium">Algorithms & Problem Solving</p>
+							<p class="text-text-dim mt-2">Actively solving algorithmic challenges and participating in programming competitions</p>
 						</div>
 					</div>
 				</section>
 
 				{/* Interests Section */}
-				<section class="bg-[#3B4252] border border-[#434C5E] rounded-lg p-8">
-					<h2 class="text-2xl font-bold text-[#E5E9F0] mb-6">Interests & Hobbies</h2>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#D8DEE9]">
+				<section class="bg-bg-card border border-border-dim rounded-lg p-8">
+					<h2 class="text-2xl font-bold text-text-header mb-6">Interests & Hobbies</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-text-dim">
 						<div class="flex items-center gap-3">
 							<span class="text-2xl">🏂</span>
 							<p><strong>Photos</strong> - I should take more photos of this</p>
