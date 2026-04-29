@@ -15,47 +15,62 @@ import { projects } from '../navigation';
 			</div>
 
 			{/* Projects Grid */}
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{projects.map((project) => (
-					<a
-						href={project.github}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-all duration-200 hover:shadow-lg hover:shadow-[#88C0D0]/20 flex flex-col"
+					<div 
+						data-project-name={project.name}
+						class="group bg-[#3B4252] border border-[#434C5E] rounded-xl hover:border-[#88C0D0] transition-all duration-300 flex flex-col h-full cursor-pointer"
 					>
-						{/* Featured Badge */}
-						{project.featured && (
-							<div class="mb-3 inline-flex">
-								<span class="px-3 py-1 bg-[#88C0D0] text-[#2E3440] text-xs font-bold rounded-full">
-									Featured
-								</span>
+						{/* Thumbnail with padding */}
+						<div class="p-4">
+							<div class="overflow-hidden">
+								<img 
+									src={project.image} 
+									alt={project.title}
+									class="w-full rounded-lg"
+								/>
 							</div>
-						)}
+						</div>
 
-						{/* Header with icon */}
-						<div class="flex items-start justify-between mb-4 flex-1">
-							<div class="flex-1">
+						{/* Content */}
+						<div class="px-6 pb-6 flex flex-col flex-grow">
+							{/* Title and Date */}
+							<div class="flex items-center justify-between mb-3">
 								<h3 class="text-xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
 									{project.title}
 								</h3>
+								<span class="text-sm text-[#D8DEE9] opacity-60 italic">{project.date}</span>
 							</div>
-							<Icon name="mdi:github" class="w-6 h-6 text-[#D8DEE9] flex-shrink-0 ml-3" />
-						</div>
 
-						{/* Description */}
-						<p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 flex-1">
-							{project.description}
-						</p>
+							{/* Description */}
+							<p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 flex-grow">
+								{project.description}
+							</p>
 
-						{/* Tags */}
-						<div class="flex flex-wrap gap-2">
-							{project.tags.map((tag) => (
-								<span class="px-2 py-1 bg-[#434C5E] text-[#88C0D0] text-xs rounded font-medium">
-									{tag}
-								</span>
-							))}
+							{/* Tags with Icon */}
+							<div class="flex items-center gap-2 mt-auto">
+								<Icon name="mdi:tag" class="w-4 h-4 text-[#88C0D0] shrink-0" />
+								<div class="flex flex-wrap gap-x-3 gap-y-1">
+									{project.tags.map((tag) => (
+										<span class="text-[11px] text-[#88C0D0] font-medium tracking-wide uppercase">
+											{tag}
+										</span>
+									))}
+								</div>
+							</div>
+
+							{/* GitHub Link overlay or button could be added here, but keeping it clean for now */}
+							<a
+								href={project.github}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="mt-4 inline-flex items-center gap-2 text-xs text-[#88C0D0] hover:text-[#81A1C1] transition-colors font-semibold"
+							>
+								<Icon name="mdi:github" class="w-4 h-4" />
+								View Source Code
+							</a>
 						</div>
-					</a>
+					</div>
 				))}
 			</div>
 		</div>

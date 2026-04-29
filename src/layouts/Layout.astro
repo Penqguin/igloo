@@ -1,6 +1,7 @@
 ---
 import Header from '../components/widgets/Header.astro';
 import Footer from '../components/widgets/Footer.astro';
+import ProjectOverlay from '../components/portfolio/ProjectOverlay.astro';
 
 interface Props {
   title?: string;
@@ -29,5 +30,6 @@ const description = 'My portfolio website';
       <slot />
     </main>
     <Footer />
+    <ProjectOverlay />
   </body>
 </html>

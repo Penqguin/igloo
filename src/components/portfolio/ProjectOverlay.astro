@@ -1,0 +1,256 @@
+---
+import { Icon } from 'astro-icon/components';
+import { projects } from '../../navigation';
+---
+
+<div 
+  id="project-overlay" 
+  class="fixed inset-0 z-100 flex hidden items-center justify-center p-4 md:p-8 overflow-hidden"
+  aria-modal="true"
+  role="dialog"
+>
+  {/* Backdrop */}
+  <div 
+    id="overlay-backdrop"
+    class="absolute inset-0 bg-[#2E3440]/90 backdrop-blur-sm cursor-pointer transition-opacity duration-300 opacity-0"
+  ></div>
+
+  {/* Modal Content */}
+  <div 
+    id="overlay-content"
+    class="relative bg-[#3B4252] border border-[#434C5E] rounded-2xl w-full max-w-5xl max-h-full flex flex-col shadow-2xl transition-all duration-300 translate-y-8 opacity-0"
+  >
+    {/* Scrollable Container */}
+    <div id="overlay-scroll" class="overflow-y-auto flex-grow custom-scrollbar">
+      {/* Project Header (Card Style) */}
+      <div id="project-header" class="p-6 md:p-10">
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="w-full md:w-3/5 overflow-hidden rounded-xl border border-[#434C5E]">
+            <img id="project-image" src="" alt="" class="w-full h-full rounded-xl object-cover" />
+          </div>
+          <div class="w-full md:w-1/2 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <h2 id="project-title" class="text-3xl md:text-4xl font-bold text-[#E5E9F0]"></h2>
+              <span id="project-date" class="text-[#D8DEE9] opacity-60 italic"></span>
+            </div>
+            <p id="project-description" class="text-[#D8DEE9] text-lg leading-relaxed mb-6"></p>
+            
+            <div id="project-tags" class="flex flex-wrap gap-2 mb-8">
+              {/* Tags will be injected here */}
+            </div>
+
+            <div class="flex gap-4 mt-auto">
+              <a
+                id="project-github"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-[#434C5E] text-[#E5E9F0] rounded-xl font-bold hover:bg-[#4C566A] transition-all"
+              >
+                <Icon name="mdi:github" class="w-5 h-5" />
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-[#434C5E] mx-6 md:mx-10" />
+
+      {/* README Content */}
+      <div id="readme-container" class="p-6 md:p-10 prose prose-invert prose-nord max-w-none">
+        <div id="readme-loading" class="flex flex-col items-center justify-center py-20 gap-4">
+          <div class="w-12 h-12 border-4 border-[#88C0D0]/20 border-t-[#88C0D0] rounded-full animate-spin"></div>
+          <p class="text-[#D8DEE9] animate-pulse">Loading documentation...</p>
+        </div>
+        <div id="readme-content" class="hidden"></div>
+        <div id="readme-error" class="hidden text-center py-20">
+          <Icon name="mdi:alert-circle" class="w-12 h-12 text-[#BF616A] mx-auto mb-4" />
+          <p class="text-[#D8DEE9]">Failed to load documentation. Please check GitHub directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #434C5E;
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4C566A;
+  }
+
+  /* Nord-inspired Markdown Styling */
+  :global(.prose-nord) {
+    --tw-prose-body: #D8DEE9;
+    --tw-prose-headings: #E5E9F0;
+    --tw-prose-links: #88C0D0;
+    --tw-prose-bold: #E5E9F0;
+    --tw-prose-counters: #81A1C1;
+    --tw-prose-bullets: #81A1C1;
+    --tw-prose-hr: #434C5E;
+    --tw-prose-quotes: #ECEFF4;
+    --tw-prose-quote-borders: #88C0D0;
+    --tw-prose-captions: #D8DEE9;
+    --tw-prose-code: #8FBCBB;
+    --tw-prose-pre-code: #E5E9F0;
+    --tw-prose-pre-bg: #2E3440;
+    --tw-prose-th-borders: #434C5E;
+    --tw-prose-td-borders: #434C5E;
+  }
+
+  :global(.prose img) {
+    border-radius: 0.75rem;
+    border: 1px solid #434C5E;
+  }
+
+  :global(.prose pre) {
+    border: 1px solid #434C5E;
+    border-radius: 0.75rem;
+  }
+</style>
+
+<script>
+  import { marked } from 'marked';
+  const projects = JSON.parse(document.getElementById('projects-data')?.textContent || '[]');
+
+  const overlay = document.getElementById('project-overlay');
+  const backdrop = document.getElementById('overlay-backdrop');
+  const content = document.getElementById('overlay-content');
+  const closeBtn = document.getElementById('close-overlay');
+  const scrollContainer = document.getElementById('overlay-scroll');
+
+  const img = document.getElementById('project-image') as HTMLImageElement;
+  const title = document.getElementById('project-title');
+  const date = document.getElementById('project-date');
+  const description = document.getElementById('project-description');
+  const tagsContainer = document.getElementById('project-tags');
+  const githubLink = document.getElementById('project-github') as HTMLAnchorElement;
+
+  const readmeContent = document.getElementById('readme-content');
+  const readmeLoading = document.getElementById('readme-loading');
+  const readmeError = document.getElementById('readme-error');
+
+  function openOverlay(projectName: string) {
+    const project = projects.find((p: any) => p.name === projectName);
+    if (!project) return;
+
+    // Set project details
+    img.src = project.image;
+    img.alt = project.title;
+    title!.textContent = project.title;
+    date!.textContent = project.date;
+    description!.textContent = project.description;
+    githubLink.href = project.github;
+
+    // Set tags
+    tagsContainer!.innerHTML = project.tags.map((tag: string) => `
+      <span class="text-xs bg-[#434C5E] text-[#88C0D0] px-3 py-1 rounded-full border border-[#88C0D0] border-opacity-30">
+        ${tag}
+      </span>
+    `).join('');
+
+    // Show overlay
+    overlay?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Animate in
+    setTimeout(() => {
+      backdrop?.classList.replace('opacity-0', 'opacity-100');
+      content?.classList.replace('opacity-0', 'opacity-100');
+      content?.classList.replace('translate-y-8', 'translate-y-0');
+    }, 10);
+
+    // Fetch README
+    fetchReadme(project.readme);
+  }
+
+  async function fetchReadme(url: string | undefined) {
+    readmeLoading?.classList.remove('hidden');
+    readmeContent?.classList.add('hidden');
+    readmeError?.classList.add('hidden');
+    scrollContainer?.scrollTo(0, 0);
+
+    if (!url) {
+      showError();
+      return;
+    }
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch');
+      const text = await response.text();
+      const html = await marked.parse(text);
+      
+      if (readmeContent) {
+        readmeContent.innerHTML = html;
+        readmeLoading?.classList.add('hidden');
+        readmeContent.classList.remove('hidden');
+      }
+    } catch (e) {
+      console.error(e);
+      showError();
+    }
+  }
+
+  function showError() {
+    readmeLoading?.classList.add('hidden');
+    readmeError?.classList.remove('hidden');
+  }
+
+  function closeOverlay() {
+    backdrop?.classList.replace('opacity-100', 'opacity-0');
+    content?.classList.replace('opacity-100', 'opacity-0');
+    content?.classList.replace('translate-y-0', 'translate-y-8');
+
+    setTimeout(() => {
+      overlay?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  // Event Listeners
+  closeBtn?.addEventListener('click', closeOverlay);
+  backdrop?.addEventListener('click', closeOverlay);
+
+  // Listen for project clicks
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    
+    // If the click is on a link or inside a link, let it happen
+    if (target.closest('a')) return;
+
+    const projectCard = target.closest('[data-project-name]');
+    if (projectCard) {
+      const projectName = projectCard.getAttribute('data-project-name');
+      if (projectName) {
+        e.preventDefault();
+        openOverlay(projectName);
+      }
+    }
+  });
+
+  // Handle ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay?.classList.contains('hidden')) {
+      closeOverlay();
+    }
+  });
+</script>
+
+<script is:inline define:vars={{ projects }}>
+  // Inject project data for client-side access
+  const script = document.createElement('script');
+  script.id = 'projects-data';
+  script.type = 'application/json';
+  script.textContent = JSON.stringify(projects);
+  document.head.appendChild(script);
+</script>

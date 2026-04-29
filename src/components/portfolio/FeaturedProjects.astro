@@ -24,38 +24,62 @@ const featuredProjects = projects.filter((p) => p.featured);
     </div>
 
     {/* Projects Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {featuredProjects.map((project) => (
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group bg-[#3B4252] border border-[#434C5E] rounded-lg p-6 hover:border-[#88C0D0] transition-all duration-200 hover:shadow-lg hover:shadow-[#88C0D0]/20"
+        <div 
+          data-project-name={project.name}
+          class="group bg-[#3B4252] border border-[#434C5E] rounded-2xl hover:border-[#88C0D0] transition-all duration-300 flex flex-col h-full shadow-md hover:shadow-2xl hover:shadow-[#88C0D0]/10 cursor-pointer"
         >
-          {/* Header with icon */}
-          <div class="flex items-start justify-between mb-4">
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
+          {/* Thumbnail with padding */}
+          <div class="p-5">
+            <div class="overflow-hidden rounded-xl">
+              <img 
+                src={project.image} 
+                alt={project.title}
+                class="w-full h-full rounded-xl"
+              />
+            </div>
+          </div>
+
+          {/* Content */}
+          <div class="px-8 pb-8 flex flex-col flex-grow">
+            {/* Title and Date */}
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-2xl font-bold text-[#E5E9F0] group-hover:text-[#88C0D0] transition-colors">
                 {project.title}
               </h3>
+              <span class="text-sm text-[#D8DEE9] opacity-60 italic">{project.date}</span>
             </div>
-            <Icon name="mdi:github" class="w-6 h-6 text-[#D8DEE9] shrink-0 ml-3" />
-          </div>
 
-          {/* Description */}
-          <p class="text-[#D8DEE9] text-sm leading-relaxed mb-4 line-clamp-2">
-            {project.description}
-          </p>
+            {/* Description */}
+            <p class="text-[#D8DEE9] text-base leading-relaxed mb-6 flex-grow">
+              {project.description}
+            </p>
 
-          {/* Tags */}
-          <div class="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span class="px-2 py-1 bg-[#434C5E] text-[#88C0D0] text-xs rounded font-medium">
-                {tag}
-              </span>
-            ))}
+            {/* Tags with Icon */}
+            <div class="flex items-center gap-3 mt-auto">
+              <Icon name="mdi:tag" class="w-5 h-5 text-[#88C0D0] shrink-0" />
+              <div class="flex flex-wrap gap-x-4 gap-y-2">
+                {project.tags.map((tag) => (
+                  <span class="text-xs text-[#88C0D0] font-semibold tracking-wider uppercase">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* GitHub Link */}
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 inline-flex items-center gap-2 text-sm text-[#88C0D0] hover:text-[#81A1C1] transition-colors font-bold"
+            >
+              <Icon name="mdi:github" class="w-5 h-5" />
+              View on GitHub
+            </a>
           </div>
-        </a>
+        </div>
       ))}
     </div>
   </div>
