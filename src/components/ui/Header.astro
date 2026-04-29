@@ -4,6 +4,8 @@ import "../../styles/global.css";
 
 const { links } = headerData;
 const navLinks = links.filter(link => link.text !== 'Home');
+
+const isExternal = (href: string) => href.startsWith('http');
 ---
 
 <header class="sticky top-0 z-50 bg-[#2E3440] border-b border-[#3B4252] backdrop-blur-sm bg-opacity-95">
@@ -23,6 +25,8 @@ const navLinks = links.filter(link => link.text !== 'Home');
         {navLinks.map((link) => (
           <a
             href={link.href}
+            target={isExternal(link.href) ? "_blank" : undefined}
+            rel={isExternal(link.href) ? "noopener noreferrer" : undefined}
             class="text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200 text-m font-medium"
           >
             {link.text}
@@ -66,6 +70,8 @@ const navLinks = links.filter(link => link.text !== 'Home');
         {navLinks.map((link) => (
           <a
             href={link.href}
+            target={isExternal(link.href) ? "_blank" : undefined}
+            rel={isExternal(link.href) ? "noopener noreferrer" : undefined}
             class="block text-[#D8DEE9] hover:text-[#88C0D0] transition-colors duration-200 font-medium py-2"
           >
             {link.text}
