@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="About" description="Learn more about me">
@@ -7,7 +8,10 @@ import Layout from '../layouts/Layout.astro';
 		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 			{/* Header */}
 			<div class="mb-12">
-				<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0] mb-4">About</h1>
+				<div class="flex items-center gap-3">
+					<Icon name="mdi:account" class="text-4xl md:text-5xl text-[#88C0D0]"></Icon>
+					<h1 class="text-4xl md:text-5xl font-bold text-[#E5E9F0]">About</h1>
+				</div>
 			</div>
 
 			{/* Content Sections */}
