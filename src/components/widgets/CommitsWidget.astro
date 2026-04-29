@@ -32,7 +32,8 @@ import { Icon } from 'astro-icon/components';
     const legendEl = document.getElementById('languageLegend');
 
     try {
-      const apiUrl = 'https://katib.jasoncameron.dev/v2/commits/latest?username=Penqguin';
+      const limit = 20;
+      const apiUrl = `https://katib.jasoncameron.dev/v2/commits/latest?username=Penqguin&limit=${limit}`;
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
@@ -73,6 +74,7 @@ import { Icon } from 'astro-icon/components';
       }
 
       // Language Distribution Bar
+      // Assuming languages provided by API are already filtered by the limit
       if (languages.length > 0) {
         barEl.innerHTML = '';
         legendEl.innerHTML = '';
