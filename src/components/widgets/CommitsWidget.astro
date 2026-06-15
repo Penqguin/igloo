@@ -32,8 +32,8 @@ import { Icon } from 'astro-icon/components';
     const legendEl = document.getElementById('languageLegend');
 
     try {
-      const limit = 20;
-      const apiUrl = `https://katib.jasoncameron.dev/v2/commits/latest?username=Penqguin&limit=${limit}`;
+      const limit = 5;
+      const apiUrl = `https://iceberg.penqguin.com/v2/commits/latest?username=penqguin&limit=${limit}&history_limit=50`;
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
