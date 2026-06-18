@@ -57,7 +57,8 @@
 
       async updateGlobalWins() {
         try {
-          const res = await fetch('https://abacus.jsn.cam/get/igloo/tictactoe-wins');
+          // Use local API route instead of direct Abacus API
+          const res = await fetch('/api/tic-tac-toe.json?action=get');
           const data = await res.json();
           const winCountEl = document.getElementById('globalWins');
           if (winCountEl) winCountEl.textContent = data.value || 0;
@@ -72,7 +73,8 @@
         if (sessionWinsEl) sessionWinsEl.textContent = this.sessionWins;
 
         try {
-          const res = await fetch('https://abacus.jsn.cam/hit/igloo/tictactoe-wins');
+          // Use local API route instead of direct Abacus API
+          const res = await fetch('/api/tic-tac-toe.json', { method: 'POST' });
           const data = await res.json();
           const winCountEl = document.getElementById('globalWins');
           if (winCountEl) winCountEl.textContent = data.value;
