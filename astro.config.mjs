@@ -12,8 +12,5 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]],
   },
-  integrations: [icon()],
-   headers: {
-    'Content-Security-Policy': "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com https://cdnjs.cloudflare.com; connect-src 'self' https://iceberg.penqguin.com https://abacus.jsn.cam https://static.cloudflareinsights.com"
-  }
+  integrations: [icon()]
 });
