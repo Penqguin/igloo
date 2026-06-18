@@ -34,7 +34,8 @@ import { Icon } from 'astro-icon/components';
     try {
       const limit = 5;
       const history_limit = 70;
-      const apiUrl = `https://iceberg.penqguin.com/v2/commits/latest?username=penqguin&limit=${limit}&history_limit=${history_limit}`;
+      // Use local API route instead of direct Iceberg API
+      const apiUrl = `/api/commits.json?username=penqguin&limit=${limit}&history_limit=${history_limit}`;
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
