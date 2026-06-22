@@ -1,0 +1,10 @@
+name = "igloo"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
+
+# Create a KV namespace and add its ID here:
+#   wrangler kv namespace create SESSION
+# Then replace <YOUR_KV_ID> with the returned ID.
+[[kv_namespaces]]
+binding = "SESSION"
+id = "<YOUR_KV_ID>"
