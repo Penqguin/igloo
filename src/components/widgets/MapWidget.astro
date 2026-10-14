@@ -7,8 +7,8 @@
     <span class="text-2xl">📍</span>
   </div>
 
-  <!-- Interactive Leaflet Map -->
-  <div id="mapContainer" class="mb-4 rounded-lg relative overflow-hidden border border-[#434C5E] h-48 bg-[#2E3440]"></div>
+  <!-- Interactive Map (MapLibre + OpenFreeMap, keyless) -->
+  <div id="mapContainer" class="mb-4 rounded-lg relative overflow-hidden border border-[#434C5E] h-48 bg-[#2E3440]"><div id="mapLoadingPlaceholder" class="absolute inset-0 flex items-center justify-center"><span class="text-[#88C0D0] text-xs">Loading map...</span></div></div>
 
   <div class="flex items-baseline gap-2 mb-2">
     <p class="text-[#D8DEE9] font-medium">Toronto, ON</p>
@@ -16,42 +16,111 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.min.js"></script>
 
 <script is:inline>
   window.initMap = function initMap() {
     const mapContainer = document.getElementById('mapContainer');
-    if (!mapContainer || !window.L) {
+    if (!mapContainer || !window.maplibregl) {
       setTimeout(initMap, 100);
       return;
     }
 
-    const map = L.map(mapContainer, {
-      scrollWheelZoom: true,
-      dragging: true,
-      touchZoom: true,
-      zoomControl: false,
+    // Dark vector style modelled on CARTO's "dark_all" basemap.
+    // Vector tiles: OpenFreeMap (free, no API key) — OpenMapTiles schema.
+    const darkStyle = {
+      version: 8,
+      glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+      sources: {
+        openmaptiles: { type: 'vector', url: 'https://tiles.openfreemap.org/planet' },
+      },
+      layers: [
+        { id: 'land', type: 'background', paint: { 'background-color': '#262631' } },
+        {
+          id: 'water', type: 'fill', 'source': 'openmaptiles', 'source-layer': 'water',
+          paint: { 'fill-color': '#191a22', 'fill-antialias': true },
+        },
+        {
+          id: 'buildings', type: 'fill', 'source': 'openmaptiles', 'source-layer': 'building',
+          minzoom: 12,
+          paint: { 'fill-color': '#2b2c38' },
+        },
+        {
+          id: 'road-rail', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['==', ['get', 'class'], 'rail'],
+          minzoom: 9,
+          paint: { 'line-color': '#34384c', 'line-width': 0.6, 'line-opacity': 0.8 },
+        },
+        {
+          id: 'road-minor', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['match', ['get', 'class'], ['minor', 'service', 'path'], true, false],
+          minzoom: 12,
+          paint: { 'line-color': '#353950', 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 16, 1.2] },
+        },
+        {
+          id: 'road-tertiary', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['match', ['get', 'class'], ['tertiary'], true, false],
+          minzoom: 11,
+          paint: { 'line-color': '#3a3f58', 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.6, 16, 1.6] },
+        },
+        {
+          id: 'road-secondary', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['==', ['get', 'class'], 'secondary'],
+          minzoom: 10,
+          paint: { 'line-color': '#3e4462', 'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 16, 2.2] },
+        },
+        {
+          id: 'road-primary', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['match', ['get', 'class'], ['primary', 'trunk'], true, false],
+          minzoom: 8,
+          paint: { 'line-color': '#454a66', 'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.7, 16, 2.8] },
+        },
+        {
+          id: 'road-motorway', type: 'line', 'source': 'openmaptiles', 'source-layer': 'transportation',
+          filter: ['==', ['get', 'class'], 'motorway'],
+          minzoom: 5,
+          paint: { 'line-color': '#4c5273', 'line-width': ['interpolate', ['linear'], ['zoom'], 5, 0.6, 16, 3.4] },
+        },
+        {
+          id: 'city-labels', type: 'symbol', 'source': 'openmaptiles', 'source-layer': 'place',
+          filter: ['==', ['get', 'class'], 'city'],
+          layout: {
+            'text-field': ['coalesce', ['get', 'name:latin'], ['get', 'name']],
+            'text-font': ['Noto Sans Regular'],
+            'text-transform': 'uppercase',
+            'text-letter-spacing': 0.18,
+            'text-size': 12,
+            'text-max-width': 8,
+          },
+          paint: {
+            'text-color': '#8b93a7',
+            'text-opacity': 0.9,
+            'text-halo-color': '#1b1c25',
+            'text-halo-width': 1,
+          },
+        },
+      ],
+    };
+
+    const map = new maplibregl.Map({
+      container: mapContainer,
+      style: darkStyle,
+      center: [-79.3832, 43.6532],
+      zoom: 11,
       attributionControl: false,
-    }).setView([43.6532, -79.3832], 11);
+      interactive: true,
+    });
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 18,
-    }).addTo(map);
+    // Hide the "Loading map..." placeholder once the first frame renders.
+    // (Remove only the placeholder node — the map's canvas lives in the same container.)
+    map.on('load', () => {
+      document.getElementById('mapLoadingPlaceholder')?.remove();
+    });
 
-    L.marker([43.6532, -79.3832], {
-      interactive: false,
-      keyboard: false,
-      icon: L.divIcon({
-        className: '',
-        iconSize: [0, 0],
-        iconAnchor: [0, 0],
-        html: `<div style="display:flex;align-items:center;gap:6px;transform:translate(8px,-50%);pointer-events:none;">
-          <span style="width:9px;height:9px;border-radius:50%;background:#88C0D0;box-shadow:0 0 0 4px rgba(136,192,208,0.2);flex-shrink:0;"></span>
-          <span style="padding:3px 12px;background:rgba(46,52,64,0.88);border:1px solid #434C5E;border-radius:8px;color:#E5E9F0;font:600 14px/1.4 system-ui,sans-serif;white-space:nowrap;">Toronto</span>
-        </div>`
-      })
-    }).addTo(map);
+    map.on('error', (e) => {
+      if (e && e.error) console.error('Map error:', e.error.message || e.error);
+    });
   };
 
   window.updateTime = function updateTime() {
