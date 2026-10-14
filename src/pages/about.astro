@@ -21,13 +21,13 @@ import { Icon } from 'astro-icon/components';
 					<h2 class="text-2xl font-bold text-text-header mb-4">Background</h2>
 					<div class="space-y-4 text-text-dim leading-relaxed">
 						<p>
-							I'm Michael M, a developer and student with a passion for building solutions to complex problems. I'm currently studying computer science and have a deep interest in systems development and data science.
+							I'm Michael M, a developer and student with a passion for building solutions to complex problems. I'm currently studying Honours Mathematics at the University of Waterloo with a deep interest in systems development and data science.
 						</p>
 						<p>
 							My journey into programming started with curiosity about how things work. I've since developed strong skills in multiple programming languages and frameworks, always striving to write clean, maintainable code that makes a real impact.
 						</p>
 						<p>
-							Beyond coding, I'm an avid snowboarder and a fan of robotics. These hobbies keep me grounded and provide a nice balance to my technical pursuits. I believe in continuous learning and pushing myself to explore new technologies and methodologies.
+							Beyond coding, I'm an avid snowboarder — time on the mountain keeps me grounded and provides a nice balance to my technical pursuits. I believe in continuous learning and pushing myself to explore new technologies and methodologies.
 						</p>
 					</div>
 				</section>
@@ -37,9 +37,9 @@ import { Icon } from 'astro-icon/components';
 					<h2 class="text-2xl font-bold text-text-header mb-6">Skills & Technologies</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
-							<h3 class="text-text-highlight font-semibold mb-3">Languages</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Programming Languages</h3>
 							<div class="flex flex-wrap gap-2">
-								{['Python', 'TypeScript', 'JavaScript', 'C', 'Java'].map((skill) => (
+								{['C++', 'Python', 'TypeScript', 'JavaScript', 'Rust', 'SQL', 'Bash', 'HTML/CSS'].map((skill) => (
 									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
@@ -48,9 +48,9 @@ import { Icon } from 'astro-icon/components';
 						</div>
 
 						<div>
-							<h3 class="text-text-highlight font-semibold mb-3">Web Development</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Frameworks &amp; Developer Tools</h3>
 							<div class="flex flex-wrap gap-2">
-								{['Astro', 'React', 'Tailwind CSS', 'Node.js'].map((skill) => (
+								{['React', 'Node.js', 'REST APIs', 'Git', 'OpenCV', 'PyTest', 'Docker', 'Cloudflare'].map((skill) => (
 									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
@@ -59,20 +59,9 @@ import { Icon } from 'astro-icon/components';
 						</div>
 
 						<div>
-							<h3 class="text-text-highlight font-semibold mb-3">Systems & Tools</h3>
+							<h3 class="text-text-highlight font-semibold mb-3">Systems &amp; Engineering</h3>
 							<div class="flex flex-wrap gap-2">
-								{['Windows', 'MacOS', 'Git', 'Docker', 'Visual Studio Code'].map((skill) => (
-									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
-										{skill}
-									</span>
-								))}
-							</div>
-						</div>
-
-						<div>
-							<h3 class="text-text-highlight font-semibold mb-3">Data Science</h3>
-							<div class="flex flex-wrap gap-2">
-								{['Machine Learning', 'Data Analysis', 'Pandas', 'NumPy'].map((skill) => (
+								{['macOS APIs', 'LLM Integrations', 'UI/API Test Automation', 'Caching & Data Pipelines', 'Asynchronous Programming', 'CI/CD'].map((skill) => (
 									<span class="px-3 py-1 bg-border-dim text-text-dim rounded-lg text-sm font-medium hover:bg-accent hover:text-bg-dark transition-colors">
 										{skill}
 									</span>
@@ -87,15 +76,31 @@ import { Icon } from 'astro-icon/components';
 					<h2 class="text-2xl font-bold text-text-header mb-6">Experience & Education</h2>
 					<div class="space-y-6">
 						<div class="border-l-4 border-accent pl-6 py-2">
-							<h3 class="text-text-header font-semibold text-lg">Computer Science Student</h3>
-							<p class="text-text-highlight text-sm font-medium">University</p>
-							<p class="text-text-dim mt-2">Currently pursuing my degree in computer science with focus on systems and data science</p>
+							<h3 class="text-text-header font-semibold text-lg">Bachelor of Mathematics, Honours Math</h3>
+							<p class="text-text-highlight text-sm font-medium">University of Waterloo — Waterloo, ON</p>
+							<p class="text-text-dim text-xs mt-1">Sep 2026 – Jun 2031 (expected)</p>
+							<p class="text-text-dim mt-2">Studying Honours Mathematics with a focus on systems development and data science</p>
 						</div>
 
 						<div class="border-l-4 border-accent pl-6 py-2">
-							<h3 class="text-text-header font-semibold text-lg">Competitive Programmer</h3>
-							<p class="text-text-highlight text-sm font-medium">Algorithms & Problem Solving</p>
-							<p class="text-text-dim mt-2">Actively solving algorithmic challenges and participating in programming competitions</p>
+							<h3 class="text-text-header font-semibold text-lg">Software Developer</h3>
+							<p class="text-text-highlight text-sm font-medium">MasteryLab — Remote</p>
+							<p class="text-text-dim text-xs mt-1">May 2025 – Sep 2025</p>
+							<p class="text-text-dim mt-2">Engineered scalable, AI-powered tutoring tools for enterprise clients, integrating LLMs and API workflows to deliver real-time, adaptive feedback</p>
+						</div>
+
+						<div class="border-l-4 border-accent pl-6 py-2">
+							<h3 class="text-text-header font-semibold text-lg">Web Tester</h3>
+							<p class="text-text-highlight text-sm font-medium">Savi Finance — Remote</p>
+							<p class="text-text-dim text-xs mt-1">Sep 2024 – Jan 2025</p>
+							<p class="text-text-dim mt-2">Designed, developed and executed automated UI and API test scripts, identifying and tracking bugs before pushing to production</p>
+						</div>
+
+						<div class="border-l-4 border-accent pl-6 py-2">
+							<h3 class="text-text-header font-semibold text-lg">Swim Instructor</h3>
+							<p class="text-text-highlight text-sm font-medium">City of Toronto — Toronto, ON</p>
+							<p class="text-text-dim text-xs mt-1">Jun 2024 – Jun 2026</p>
+							<p class="text-text-dim mt-2">Instructed and evaluated 300+ students across all age demographics, progressing complete beginners to certified assistant lifeguards</p>
 						</div>
 					</div>
 				</section>
@@ -105,19 +110,15 @@ import { Icon } from 'astro-icon/components';
 					<h2 class="text-2xl font-bold text-text-header mb-6">Interests & Hobbies</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-text-dim">
 						<div class="flex items-center gap-3">
-							<span class="text-2xl">🏂</span>
-							<p><strong>Photos</strong> - I should take more photos of this</p>
+							<span class="text-2xl">&#xef69;</span>
+							<p><strong>Snowboarding</strong> - I should take more photos of this</p>
 						</div>
 						<div class="flex items-center gap-3">
-							<span class="text-2xl">🤖</span>
-							<p><strong>Robotics</strong> - Building and programming robots</p>
-						</div>
-						<div class="flex items-center gap-3">
-							<span class="text-2xl">💻</span>
+							<span class="text-2xl">&#xf0bae;</span>
 							<p><strong>Open Source</strong> - Contributing to community projects</p>
 						</div>
 						<div class="flex items-center gap-3">
-							<span class="text-2xl">🧩</span>
+							<span class="text-2xl">&#xf12e;</span>
 							<p><strong>Problem Solving</strong> - Algorithmic and creative challenges</p>
 						</div>
 					</div>

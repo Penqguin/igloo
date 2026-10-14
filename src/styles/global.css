@@ -1,8 +1,17 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+/* Nerd Font symbols, subset to only the glyphs used on the site */
+@font-face {
+  font-family: 'Igloo NF';
+  src: url('/fonts/SymbolsNerdFont-igloo.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-roboto-mono: "Roboto Mono", monospace;
+  --font-roboto-mono: "Roboto Mono", "Igloo NF", monospace;
   
   /* Nord Color Palette */
   --color-nord-0: #2e3440; /* Polar Night - Darkest */

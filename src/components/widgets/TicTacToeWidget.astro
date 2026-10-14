@@ -112,7 +112,7 @@
           this.board[move] = 'O';
           if (this.checkWin('O')) {
             this.updateBoard();
-            gameStatus.textContent = 'Bot wins! 🤖';
+            gameStatus.textContent = 'Bot wins! \u{F06A9}';
             this.gameActive = false;
             return;
           }
@@ -169,14 +169,14 @@
         this.updateBoard();
 
         if (this.checkWin('X')) {
-          gameStatus.textContent = 'You win! 🎉';
+          gameStatus.textContent = 'You win! \u{F1056}';
           await this.incrementWins();
           this.gameActive = false;
           return;
         }
 
         if (this.getAvailableMoves().length === 0) {
-          gameStatus.textContent = 'Draw! 🤝';
+          gameStatus.textContent = 'Draw! \u{F1218}';
           this.gameActive = false;
           return;
         }
