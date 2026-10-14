@@ -60,6 +60,8 @@ export interface Project {
   readme?: string; // Optional custom README URL or path
 }
 
+// All project thumbnails are generated with Bannerbear's GitHub social preview tool:
+// https://www.bannerbear.com/demos/github-social-preview-generator-tool/
 export const projects: Project[] = [
   {
     name: 'igloo',
@@ -95,5 +97,16 @@ export const projects: Project[] = [
     github: 'https://github.com/Penqguin/ONotes',
     tags: ['algorithms', 'data-structures', 'notes', 'Quartz v4'],
     readme: 'https://raw.githubusercontent.com/Penqguin/ONotes/main/README.md',
+  },
+  {
+    name: 'Iceberg',
+    title: 'Iceberg',
+    description: 'Github stats fetcher.',
+    image: '/project-thumbnails/Iceberg.jpg',
+    date: '2026',
+    featured: false,
+    github: 'https://github.com/Penqguin/Iceberg',
+    tags: ['rust', 'github', 'stats', 'api'],
+    readme: 'https://raw.githubusercontent.com/Penqguin/Iceberg/main/README.md',
   },
 ];
