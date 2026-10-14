@@ -32,11 +32,25 @@
       dragging: true,
       touchZoom: true,
       zoomControl: false,
+      attributionControl: false,
     }).setView([43.6532, -79.3832], 11);
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, FAO, NOAA, USGS',
       maxZoom: 18,
+    }).addTo(map);
+
+    L.marker([43.6532, -79.3832], {
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        className: '',
+        iconSize: [0, 0],
+        iconAnchor: [0, 0],
+        html: `<div style="display:flex;align-items:center;gap:6px;transform:translate(8px,-50%);pointer-events:none;">
+          <span style="width:9px;height:9px;border-radius:50%;background:#88C0D0;box-shadow:0 0 0 4px rgba(136,192,208,0.2);flex-shrink:0;"></span>
+          <span style="padding:3px 12px;background:rgba(46,52,64,0.88);border:1px solid #434C5E;border-radius:8px;color:#E5E9F0;font:600 14px/1.4 system-ui,sans-serif;white-space:nowrap;">Toronto</span>
+        </div>`
+      })
     }).addTo(map);
   };
 
