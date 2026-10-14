@@ -32,12 +32,11 @@
       dragging: true,
       touchZoom: true,
       zoomControl: false,
-      attributionControl: false,
     }).setView([43.6532, -79.3832], 11);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      maxZoom: 19,
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, FAO, NOAA, USGS',
+      maxZoom: 18,
     }).addTo(map);
   };
 
