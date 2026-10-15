@@ -25,33 +25,57 @@ import { Icon } from 'astro-icon/components';
 </div>
 
 <script is:inline>
+  // Stale-while-revalidate: paint instantly from a cached copy in
+  // localStorage, then refresh in the background. A fresh render replaces
+  // the stale one once the network answers; a failed fetch leaves the
+  // stale copy on screen instead of showing an error.
+  const COMMITS_CACHE_KEY = 'igloo:commits:limit5:history70';
+  const COMMITS_CACHE_MAX_AGE = 6 * 60 * 60 * 1000; // 6 hours
+
+  function readCommitsCache() {
+    try {
+      const raw = localStorage.getItem(COMMITS_CACHE_KEY);
+      if (!raw) return null;
+      const { ts, data } = JSON.parse(raw);
+      if (!data || Array.isArray(data) || typeof ts !== 'number') return null;
+      if (Date.now() - ts > COMMITS_CACHE_MAX_AGE) {
+        localStorage.removeItem(COMMITS_CACHE_KEY);
+        return null;
+      }
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  function storeCommitsCache(data) {
+    try {
+      localStorage.setItem(COMMITS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data }));
+    } catch {
+      // storage full/quota — stale-while-revalidate is an optimization, ignore
+    }
+  }
+
   window.loadCommitsAndLanguages = async function loadCommitsAndLanguages() {
     const commitsList = document.getElementById('commitsList');
     const barContainer = document.getElementById('languageBarContainer');
     const barEl = document.getElementById('languageBar');
     const legendEl = document.getElementById('languageLegend');
 
-    try {
-      const limit = 5;
-      const history_limit = 70;
-      // Use local API route instead of direct Iceberg API
-      const apiUrl = `/api/commits.json?username=penqguin&limit=${limit}&history_limit=${history_limit}`;
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-      const data = await response.json();
+    function render(data) {
       const commits = data.commits || [];
       const languages = data.languages || [];
 
       if (commits.length === 0) {
         commitsList.innerHTML = '<p class="text-text-highlight">No recent commits found.</p>';
+        barContainer.classList.add('hidden');
         return;
       }
 
       // Display top 3 commits
       commitsList.innerHTML = '';
       const displayCommits = commits.slice(0, 3);
-      
+
       for (const commit of displayCommits) {
         const msg = commit.messageHeadline;
         const sha = commit.oid.substring(0, 7);
@@ -120,10 +144,35 @@ import { Icon } from 'astro-icon/components';
         }
 
         barContainer.classList.remove('hidden');
+      } else {
+        barContainer.classList.add('hidden');
       }
+    }
+
+    // 1. Stale paint (insta-load if we've visited before)
+    const cached = readCommitsCache();
+    if (cached) render(cached);
+
+    // 2. Background revalidate
+    try {
+      const limit = 5;
+      const history_limit = 70;
+      // Use local API route instead of direct Iceberg API
+      const apiUrl = `/api/commits.json?username=penqguin&limit=${limit}&history_limit=${history_limit}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      if (data.error) throw new Error('Upstream error');
+      storeCommitsCache(data);
+      render(data);
     } catch (err) {
-      console.error('Failed to load commits:', err);
-      commitsList.innerHTML = '<p class="text-text-highlight">Unable to load recent commits.</p>';
+      // The network is only the source of truth when there's nothing
+      // cached to show — otherwise keep the already-painted stale copy.
+      if (!cached && !commitsList.firstChild) {
+        console.error('Failed to load commits:', err);
+        commitsList.innerHTML = '<p class="text-text-highlight">Unable to load recent commits.</p>';
+      }
     }
   };
 
