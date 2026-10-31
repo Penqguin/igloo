@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { COMMITS_HEADERS, fetchCommitsData, ICEBERG_DEFAULTS } from '../../utils/iceberg';
 
 export const prerender = false;
 
@@ -8,53 +9,17 @@ export const prerender = false;
 // Entry TTL follows the stored response's Cache-Control (s-maxage=3600).
 // See docs/faster-iceberg-fetch.md.
 export const GET: APIRoute = async ({ url, locals }) => {
-	const username = url.searchParams.get('username') ?? 'penqguin';
-	const limit = url.searchParams.get('limit') ?? '5';
-	const historyLimit = url.searchParams.get('history_limit') ?? '70';
-
-	// The iceberg URL doubles as the Cache API key: fully-qualified, valid,
-	// and parameter-exact with what the dashboard widget requests.
-	const apiUrl = `https://iceberg.penqguin.com/v2/commits/latest?username=${username}&limit=${limit}&history_limit=${historyLimit}`;
-	const headers = {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=300',
+	const params = {
+		username: url.searchParams.get('username') ?? ICEBERG_DEFAULTS.username,
+		limit: url.searchParams.get('limit') ?? ICEBERG_DEFAULTS.limit,
+		historyLimit: url.searchParams.get('history_limit') ?? ICEBERG_DEFAULTS.historyLimit,
 	};
 
 	try {
-		// caches.default exists in the Cloudflare runtime only; degrade to a
-		// plain proxy pass where it's absent.
-		const cache = typeof caches !== 'undefined' ? caches.default : undefined;
-
-		if (cache) {
-			const cached = await cache.match(apiUrl);
-			if (cached) {
-				return cached;
-			}
-		}
-
-		const response = await fetch(apiUrl, { headers: { 'User-Agent': 'igloo-portfolio' } });
-
-		if (!response.ok) {
-			throw new Error(`Iceberg API error: ${response.status}`);
-		}
-
-		const data = await response.json();
-		const resp = new Response(JSON.stringify(data), { headers });
-
-		if (cache) {
-			// waitUntil keeps the cache write alive once the response is returned.
-			// locals.runtime is provided by the @astrojs/cloudflare adapter;
-			// fall back to a fire-and-forget put where it isn't available.
-			const runtime = (locals as { runtime?: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } } }).runtime;
-			const put = cache
-				.put(apiUrl, resp.clone())
-				.catch((err: unknown) => console.error('Failed to cache commits:', err));
-			if (runtime?.ctx?.waitUntil) {
-				runtime.ctx.waitUntil(put);
-			}
-		}
-
-		return resp;
+		// Fetch + edge-cache logic lives in utils/iceberg.ts so page renders can
+		// reuse it to refresh the first-paint snapshot without blocking.
+		const data = await fetchCommitsData(locals, params);
+		return new Response(JSON.stringify(data), { headers: { ...COMMITS_HEADERS } });
 	} catch (error) {
 		console.error('Failed to fetch commits:', error);
 		return new Response(

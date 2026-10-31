@@ -2,7 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import FeaturedProjects from '../components/projects/FeaturedProjects.astro';
+import { getCommitsSeed } from '../utils/iceberg';
 import Dashboard from '../components/Dashboard.astro';
+
+// Server-side seed: the latest commits snapshot from KV, inlined into the HTML
+// so first-time visitors get instant paint. Refresh happens in the background
+// (waitUntil) when stale — never blocking this render.
+const commitsSeed = await getCommitsSeed(Astro.locals);
 ---
 
 <Layout title="Home" description="Welcome to my portfolio website">
@@ -19,6 +25,6 @@ import Dashboard from '../components/Dashboard.astro';
 	
 	<FeaturedProjects />
 	
-	<Dashboard />
+	<Dashboard commitsSeed={commitsSeed} />
 </Layout>
 

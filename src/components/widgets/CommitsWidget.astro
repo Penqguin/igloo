@@ -1,5 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components';
+
+const { seed = null } = Astro.props;
+// Inlined as JSON for the client script; escape "<" so a commit headline
+// containing it can't terminate the script element.
+const seedJson = JSON.stringify(seed).replace(/</g, '\\u003c');
 ---
 
 <div class="bg-bg-card border border-border-dim rounded-lg p-6 hover:border-accent transition-colors duration-200 lg:col-span-2">
@@ -24,13 +29,23 @@ import { Icon } from 'astro-icon/components';
   </a>
 </div>
 
-<script is:inline>
-  // Stale-while-revalidate: paint instantly from a cached copy in
-  // localStorage, then refresh in the background. A fresh render replaces
-  // the stale one once the network answers; a failed fetch leaves the
-  // stale copy on screen instead of showing an error.
+<script is:inline define:vars={{ seedJson }}>
+  // Stale-while-revalidate: paint instantly, then refresh in the background.
+  // Paint order: a cached copy in localStorage (repeat visits), else the
+  // server-rendered seed (first visits — no localStorage yet). A fresh render
+  // replaces the stale one once the network answers; a failed fetch leaves
+  // the painted copy on screen instead of showing an error.
   const COMMITS_CACHE_KEY = 'igloo:commits:limit5:history70';
   const COMMITS_CACHE_MAX_AGE = 6 * 60 * 60 * 1000; // 6 hours
+
+  // Server seed (JSON-injected by the page render; shape-checked to be safe)
+  let seed = null;
+  try {
+    const parsed = JSON.parse(seedJson);
+    if (parsed && Array.isArray(parsed.commits) && Array.isArray(parsed.languages)) seed = parsed;
+  } catch {
+    seed = null;
+  }
 
   function readCommitsCache() {
     try {
@@ -149,9 +164,10 @@ import { Icon } from 'astro-icon/components';
       }
     }
 
-    // 1. Stale paint (insta-load if we've visited before)
+    // 1. Instant paint: localStorage copy, else the server seed (first visits)
     const cached = readCommitsCache();
-    if (cached) render(cached);
+    let painted = cached ?? seed;
+    if (painted) render(painted);
 
     // 2. Background revalidate
     try {
@@ -165,11 +181,16 @@ import { Icon } from 'astro-icon/components';
       const data = await response.json();
       if (data.error) throw new Error('Upstream error');
       storeCommitsCache(data);
-      render(data);
+      // Skip the re-render when it matches what's already on screen — avoids
+      // a visible flicker while the widget swaps in the fresh copy.
+      if (JSON.stringify(data) !== JSON.stringify(painted)) {
+        painted = data;
+        render(data);
+      }
     } catch (err) {
       // The network is only the source of truth when there's nothing
-      // cached to show — otherwise keep the already-painted stale copy.
-      if (!cached && !commitsList.firstChild) {
+      // painted to show — otherwise keep the already-painted copy.
+      if (!painted && !commitsList.firstChild) {
         console.error('Failed to load commits:', err);
         commitsList.innerHTML = '<p class="text-text-highlight">Unable to load recent commits.</p>';
       }

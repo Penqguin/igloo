@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Cache directory
 .cache/
+
+# Wrangler local state (platformProxy)
+.wrangler/
